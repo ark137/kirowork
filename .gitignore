@@ -6,3 +6,9 @@ out/*.mp4
 !out/stage1-preview.mp4
 !out/stage2-preview.mp4
 !out/stage3-preview.mp4
+.sfx-src/
+out/soundtrack.wav
+out/full-chunks/
+out/full-video.mp4
+out/render.*
+!out/anxin-film-full.mp4

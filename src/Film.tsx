@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill} from 'remotion';
+import {AbsoluteFill, Html5Audio, staticFile} from 'remotion';
 import {TransitionSeries, linearTiming} from '@remotion/transitions';
 import {fade} from '@remotion/transitions/fade';
 import {SCENES, TRANSITION} from './timeline';
@@ -33,6 +33,8 @@ export const Film: React.FC = () => {
     <AbsoluteFill style={{background: '#F3EADA'}}>
       <TransitionSeries>{children}</TransitionSeries>
       <Atmosphere />
+      {/* 全片音效轨（无音乐），由 scripts/make-soundtrack.py 生成 */}
+      <Html5Audio src={staticFile('sfx/soundtrack.mp3')} />
     </AbsoluteFill>
   );
 };
