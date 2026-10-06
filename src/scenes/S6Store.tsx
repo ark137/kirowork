@@ -80,6 +80,8 @@ export const S6Store: React.FC = () => {
         </g>
       </svg>
       <OldPhoto strength={0.9} seed="s6" />
+      {/* 字幕托底：底部宣纸色渐隐带 */}
+      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(251,246,236,0) 72%, rgba(251,246,236,0.82) 88%, rgba(251,246,236,0.9) 100%)'}} />
     </AbsoluteFill>
   );
 };

@@ -6,10 +6,24 @@ import {Subtitle} from './components/Subtitle';
 import {YearTag} from './components/YearTag';
 import {Placeholder} from './scenes/Placeholder';
 import {Prologue} from './scenes/Prologue';
+import {S2Lignin} from './scenes/S2Lignin';
+import {S3Forest} from './scenes/S3Forest';
+import {S4Wenzhou} from './scenes/S4Wenzhou';
+import {S5Blueprint} from './scenes/S5Blueprint';
+import {S6Store} from './scenes/S6Store';
+import {S7TreeMark} from './scenes/S7TreeMark';
+import {S8Factory} from './scenes/S8Factory';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
   prologue: Prologue,
+  s2: S2Lignin,
+  s3: S3Forest,
+  s4: S4Wenzhou,
+  s5: S5Blueprint,
+  s6: S6Store,
+  s7: S7TreeMark,
+  s8: S8Factory,
 };
 
 const LEAD_IN = 8;
