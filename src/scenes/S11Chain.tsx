@@ -58,11 +58,11 @@ export const S11Chain: React.FC = () => {
             <feDropShadow dx="0" dy="14" stdDeviation="18" floodColor="#6B4E2A" floodOpacity="0.3" />
           </filter>
         </defs>
-        {/* 世界地图暗纹 */}
-        <g fill={C.paperDeep} opacity={0.6}>
-          <path d="M160,330 Q260,300 340,360 Q380,460 330,560 Q300,660 260,760 Q220,640 210,540 Q150,450 160,330 Z" />
-          <path d="M1480,300 Q1640,260 1780,320 Q1820,420 1740,480 Q1640,520 1560,470 Q1500,400 1480,300 Z" />
-          <path d="M840,320 Q960,290 1060,340 Q1080,460 1000,560 Q940,620 900,540 Q860,430 840,320 Z" />
+        {/* 背景：淡淡的海图纬线 */}
+        <g stroke={C.inkWash} strokeOpacity={0.1} strokeWidth={1.4}>
+          {[260, 360, 460, 660, 760, 860].map((y) => (
+            <line key={y} x1={80} y1={y} x2={W - 80} y2={y} strokeDasharray="4 10" />
+          ))}
         </g>
         {/* 链条 */}
         <g>
@@ -94,7 +94,7 @@ export const S11Chain: React.FC = () => {
           const p = nodeIn(i);
           const isMid = i === 1;
           return (
-            <g key={i} transform={`translate(${n.x} ${Y}) scale(${p})`} opacity={p}>
+            <g key={i} transform={`translate(${n.x} ${Y}) scale(${p * 1.2})`} opacity={p}>
               <circle r={isMid ? 74 : 92} fill="#FBF6EC" stroke={isMid ? C.inkMute : C.goldDeep} strokeWidth={4} strokeDasharray={isMid ? '8 8' : undefined} />
               {i === 0 ? <ForestIcon /> : null}
               {i === 1 ? <ShipIcon /> : null}
@@ -109,15 +109,15 @@ export const S11Chain: React.FC = () => {
           );
         })}
         {/* 大手 */}
-        <g transform={`translate(${NODES[1].x} ${interpolate(hand, [0, 1], [-520, Y - 40])})`} filter="url(#s11-shadow)">
+        <g transform={`translate(${NODES[1].x} ${interpolate(hand, [0, 1], [-520, Y - 60])}) scale(1.35)`} filter="url(#s11-shadow)">
           <Fist grip={grip} />
         </g>
         {/* 价格标签 */}
         <g opacity={label}>
           {[
-            [NODES[1].x - 230, Y - 190, '¥ ↑'],
-            [NODES[1].x + 210, Y - 220, '¥ ↑↑'],
-            [NODES[1].x + 40, Y - 330, '¥ ↑↑↑'],
+            [NODES[1].x - 300, Y - 170, '¥ ↑'],
+            [NODES[1].x + 300, Y - 210, '¥ ↑↑'],
+            [NODES[1].x + 330, Y - 330, '¥ ↑↑↑'],
           ].map(([x, y, t], i) => (
             <g key={i} transform={`translate(${x} ${(y as number) - label * 16}) rotate(${-8 + i * 8})`}>
               <path d="M-50,-24 L40,-24 L62,0 L40,24 L-50,24 Z" fill={C.seal} />

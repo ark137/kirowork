@@ -44,7 +44,7 @@ export const S10Ban: React.FC = () => {
           </linearGradient>
           <filter id="s10-stamp" x="-10%" y="-10%" width="120%" height="120%">
             <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="5" result="n" />
-            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.6" result="holes" />
+            <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.2 1.55" result="holes" />
             <feComposite in="SourceGraphic" in2="holes" operator="in" />
           </filter>
           <filter id="s10-shadow" x="-10%" y="-10%" width="120%" height="130%">
@@ -101,9 +101,9 @@ export const S10Ban: React.FC = () => {
           </text>
           {/* 红章 */}
           {stamp > 0 ? (
-            <g transform={`translate(70 160) scale(${(2.4 - 1.4 * stamp) * inkSpread}) rotate(-14)`} opacity={stamp}>
+            <g transform={`translate(20 150) scale(${(2.6 - 1.25 * stamp) * inkSpread}) rotate(-12)`} opacity={stamp}>
               <g filter="url(#s10-stamp)">
-                <rect x={-150} y={-62} width={300} height={124} rx={10} fill="none" stroke={C.seal} strokeWidth={10} />
+                <rect x={-150} y={-62} width={300} height={124} rx={10} fill="rgba(184,50,42,0.06)" stroke={C.seal} strokeWidth={12} />
                 <text x={0} y={26} textAnchor="middle" fontFamily={serif} fontWeight={900} fontSize={76} fill={C.seal} letterSpacing={8}>
                   禁止砍伐
                 </text>
