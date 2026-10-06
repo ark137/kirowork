@@ -22,6 +22,8 @@ import {S12Docks} from './scenes/S12Docks';
 import {S13Tape} from './scenes/S13Tape';
 import {S14Clocks} from './scenes/S14Clocks';
 import {S15Fax} from './scenes/S15Fax';
+import {SMeet} from './scenes/SMeet';
+import {SNameplates} from './scenes/SNameplates';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -42,6 +44,8 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   tape: S13Tape,
   clocks: S14Clocks,
   fax: S15Fax,
+  meet: SMeet,
+  nameplates: SNameplates,
 };
 
 const LEAD_IN = 8;

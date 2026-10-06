@@ -14,7 +14,9 @@ export const InkFigure: React.FC<{
   color?: string;
   opacity?: number;
   blur?: number;
-}> = ({x, y, height = 200, sway = 0, hair = 'long', color = C.ink, opacity = 1, blur = 0}) => {
+  /** 右手伸向的目标点（画布坐标）；给出时右臂改为抬起的手臂 */
+  reach?: {x: number; y: number};
+}> = ({x, y, height = 200, sway = 0, hair = 'long', color = C.ink, opacity = 1, blur = 0, reach}) => {
   const s = height / 200;
   const flap = sway * 2.5;
   return (
@@ -35,7 +37,7 @@ export const InkFigure: React.FC<{
         />
         {/* 手臂 */}
         <path d="M-21,-155 C-27,-140 -28,-118 -27,-98 L-22,-97 C-22,-116 -21,-134 -17,-148 Z" />
-        <path d="M21,-155 C27,-140 28,-118 27,-98 L22,-97 C22,-116 21,-134 17,-148 Z" />
+        {reach ? null : <path d="M21,-155 C27,-140 28,-118 27,-98 L22,-97 C22,-116 21,-134 17,-148 Z" />}
         {/* 颈与头 */}
         <rect x={-4.5} y={-168} width={9} height={10} rx={2} />
         <ellipse cx={0} cy={-178} rx={9.5} ry={11.5} />
@@ -45,6 +47,18 @@ export const InkFigure: React.FC<{
           <path d="M-10.5,-179 C-12,-194 12,-194 10.5,-179 L9.5,-173 L-9.5,-173 Z" />
         )}
       </g>
+      {reach ? (
+        <g>
+          <path
+            d={`M19,-150 Q${(19 + (reach.x - x) / s) / 2 + 6},${(-150 + (reach.y - y) / s) / 2 + 10} ${(reach.x - x) / s},${(reach.y - y) / s}`}
+            fill="none"
+            stroke={color}
+            strokeWidth={8}
+            strokeLinecap="round"
+          />
+          <circle cx={(reach.x - x) / s} cy={(reach.y - y) / s} r={4.6} fill={color} />
+        </g>
+      ) : null}
     </g>
   );
 };
