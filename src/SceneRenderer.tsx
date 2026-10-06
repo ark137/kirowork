@@ -14,6 +14,8 @@ import {S5bInspector} from './scenes/S5bInspector';
 import {S6Store} from './scenes/S6Store';
 import {S7TreeMark} from './scenes/S7TreeMark';
 import {Factory} from './scenes/Factory';
+import {S8Amazon} from './scenes/S8Amazon';
+import {S9Canopy} from './scenes/S9Canopy';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -26,6 +28,8 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   s6: S6Store,
   s7: S7TreeMark,
   factory: Factory,
+  amazon: S8Amazon,
+  canopy: S9Canopy,
 };
 
 const LEAD_IN = 8;
