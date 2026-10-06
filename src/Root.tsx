@@ -2,6 +2,7 @@ import React from 'react';
 import {AbsoluteFill, Composition, Folder} from 'remotion';
 import {Film} from './Film';
 import {LogoCompare, LogoSheet} from './LogoSheet';
+import {PersonSheet} from './PersonSheet';
 import {SceneRenderer, SCENE_COMPONENTS} from './SceneRenderer';
 import {Atmosphere} from './components/Paper';
 import {SCENES, TOTAL_FRAMES} from './timeline';
@@ -15,6 +16,7 @@ export const Root: React.FC = () => (
     <Composition id="Film" component={Film} durationInFrames={TOTAL_FRAMES} fps={FPS} width={W} height={H} />
     <Composition id="LogoCompare" component={LogoCompare} durationInFrames={1} fps={FPS} width={W} height={H} />
     <Composition id="LogoSheet" component={LogoSheet} durationInFrames={100} fps={FPS} width={W} height={H} />
+    <Composition id="PersonSheet" component={PersonSheet} durationInFrames={1} fps={FPS} width={W} height={H} />
     <Folder name="Scenes">
       {SCENES.filter((s) => SCENE_COMPONENTS[s.key]).map((scene) => (
         <Composition

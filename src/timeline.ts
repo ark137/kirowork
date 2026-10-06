@@ -36,7 +36,7 @@ export const SHOTS: Shot[] = [
     brief: '荒芜大地，苔藓与矮小蕨类；推进到细胞，细胞壁里长出“骨架”',
     subs: [
       {zh: '四亿年前，陆地一片荒芜。', en: 'Four hundred million years ago, the land lay barren.'},
-      {zh: '植物学会了造“骨头”，它叫木质素。', en: 'Plants learned to build “bones” — a substance called lignin.'},
+      {zh: '植物学会了造“骨头”，它叫木质素。', en: 'Plants learned to build "bones" — a substance called lignin.'},
     ]},
   {id: 3, dur: 6, act: '第一幕 · 木的诞生', line: 'A', year: '约 3.85 亿年前', yearNote: 'FIRST FORESTS', scene: 's3',
     brief: '第一片森林，第一批真正站直的树，光线穿过树冠',
@@ -87,7 +87,7 @@ export const SHOTS: Shot[] = [
   // ───────── 第四幕：一纸传真 ─────────
   {id: 13, dur: 6, act: '第四幕 · 一纸传真', line: 'B', year: '1998.7', scene: 'tape',
     brief: '特写：一卷封箱胶带，印着电话和传真号码',
-    subs: [{zh: '1998 年 7 月，他在一卷封箱胶带上，找到了一个巴西供应商的电话。', en: 'In July 1998, on a roll of packing tape, he found a Brazilian supplier’s number.'}]},
+    subs: [{zh: '1998 年 7 月，他在一卷封箱胶带上，找到了一个巴西供应商的电话。', en: 'In July 1998, on a roll of packing tape, he found a Brazilian supplier\'s number.'}]},
   {id: 14, dur: 7, act: '第四幕 · 一纸传真', line: 'B', year: '1998', scene: 'clocks',
     brief: '温州与巴西两个钟面，相差 11 小时；电话不停拨出',
     subs: [
@@ -151,13 +151,13 @@ export const SHOTS: Shot[] = [
     brief: '会议桌两端两个剪影，对话气泡变成两条缠绕的枝干',
     subs: [
       {zh: '父子俩在会议上常常争得面红耳赤。', en: 'Father and son often argued heatedly in meetings.'},
-      {zh: '父亲说：只要儿子说得对，就该有心胸接受，否则，企业成不了百年企业。', en: '“If my son is right, I must have the heart to accept it — or we will never last a hundred years.”'},
+      {zh: '父亲说：只要儿子说得对，就该有心胸接受，否则，企业成不了百年企业。', en: '"If my son is right, I must have the heart to accept it — or we will never last a hundred years."'},
     ]},
   {id: 24, dur: 9, act: '第八幕 · 传承', line: 'B', year: '2022–2025', scene: 's24',
     brief: '2022 接任总裁；2023 “树木的秘密”展厅；2025 上海旗舰店焕新；两条枝干合成一棵树',
     subs: [
       {zh: '2022 年，卢奕开出任总裁。', en: 'In 2022, Ben Lu became president.'},
-      {zh: '从冲突到理解，互相依靠，互为铠甲。', en: 'From conflict to understanding — each other’s support, each other’s armor.'},
+      {zh: '从冲突到理解，互相依靠，互为铠甲。', en: 'From conflict to understanding — each other\'s support, each other\'s armor.'},
     ]},
 
   // ───────── 尾声 ─────────

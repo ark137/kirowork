@@ -27,6 +27,12 @@ import {SNameplates} from './scenes/SNameplates';
 import {SSatellite} from './scenes/SSatellite';
 import {S20World} from './scenes/S20World';
 import {S21Landmarks} from './scenes/S21Landmarks';
+import {S22Return} from './scenes/S22Return';
+import {S23Debate} from './scenes/S23Debate';
+import {S24Legacy} from './scenes/S24Legacy';
+import {S25Books} from './scenes/S25Books';
+import {S26Windows} from './scenes/S26Windows';
+import {S27Finale} from './scenes/S27Finale';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -52,6 +58,12 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   satellite: SSatellite,
   s20: S20World,
   s21: S21Landmarks,
+  s22: S22Return,
+  s23: S23Debate,
+  s24: S24Legacy,
+  s25: S25Books,
+  s26: S26Windows,
+  s27: S27Finale,
 };
 
 const LEAD_IN = 8;
