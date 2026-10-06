@@ -52,11 +52,13 @@ export const SHOTS: Shot[] = [
       {zh: '他学船舶设计。造船要懂水，更要懂木头。', en: 'He studied naval architecture. To build ships, you must know water — and wood.'},
       {zh: '一颗种子，就这样埋下了。', en: 'A seed was planted.'},
     ]},
-  {id: 5.5, label: '5+', dur: 7, act: '第二幕 · 人的起点', line: 'B', year: '毕业之后', yearNote: 'THE CHOICE', scene: 's5b',
-    brief: '机关办公室：桌上一只冒热气的“铁饭碗”；他把一封辞呈放在桌上，转身走向门口；门推开，金光涌入，光里是一片木地板的特写',
+  {id: 5.5, label: '5+', dur: 9, act: '第二幕 · 人的起点', line: 'B', scene: 's5b',
+    // 年份标签由场景自己绘制：1988 → 1994 随证书滚动
+    brief: '验船师：温州渔港，木质渔船；他沿船舷敲击船板验船 → 检验证书一年年盖章叠起（1988→1994）→ 放下检验锤、摘下工作帽 → 手抚船板，船板化作一片木地板',
     subs: [
-      {zh: '毕业后，他辞去公务员的“铁饭碗”，', en: 'After graduating, he gave up a civil-service job — the “iron rice bowl” —'},
-      {zh: '选择了内心更热爱的木头，从一片木地板开始。', en: 'to follow the wood he truly loved, starting with a single floorboard.'},
+      {zh: '1988 年毕业后，他考进温州市渔业船舶检验局，成了一名验船师。', en: 'In 1988, after graduating, he passed the exam to become a ship inspector in Wenzhou.'},
+      {zh: '六年里，他验过一条又一条木船，摸透了船板里的木头。', en: 'For six years, he inspected boat after boat, coming to know the wood in every plank.'},
+      {zh: '1994 年，他辞去公务员的“铁饭碗”，选择了心里更热爱的木头。', en: 'In 1994, he left his secure government post to follow the wood he truly loved.'},
     ]},
   {id: 6, dur: 7, act: '第二幕 · 人的起点', line: 'B', year: '1994.4.8', yearNote: '28 m²', scene: 's6',
     brief: '第一家门店（插画重绘）：黄色门头、红字“安信地板”，镜头缓慢推入',
