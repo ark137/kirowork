@@ -1,16 +1,17 @@
 import React from 'react';
-import {C, sans} from '../theme';
+import {C} from '../theme';
+import {GROUND_PATH, LOGO_H, LOGO_TILE_DATA, LOGO_W, TEXT_LEFT_PATH, TEXT_RIGHT_PATH, TRUNK_PATH} from './logoData';
 
 /**
- * 安信地板 Logo 矢量重绘（坐标系 1024 × 740）
- * 树冠 = 一组倾斜的地板条，按行错缝排布；树干 + 地平弧 + 红字。
- * 导出几何数据，供第 7 / 26 / 27 镜逐块动画使用。
+ * 安信地板 Logo 矢量重绘（坐标系与原图一致：1867 × 1347）
+ * 所有几何均由 scripts/extract-logo.py 从原图 assets/安信地板 logo-2011.png 识别得到：
+ * 46 块地板条（精确位置）、树干、地平弧、红字轮廓。
+ * 导出 LOGO_TILES，供第 7 / 26 / 27 镜逐块动画使用。
  */
-export const LOGO_W = 1024;
-export const LOGO_H = 740;
+export {LOGO_W, LOGO_H, TRUNK_PATH, GROUND_PATH};
 
 export type Tile = {
-  i: number; // 行（从上往下）
+  i: number; // 行（沿长轴方向，从左上到右下）
   j: number; // 行内序号
   idx: number; // 堆叠顺序（自下而上）
   cx: number;
@@ -20,50 +21,17 @@ export type Tile = {
   rot: number; // deg
 };
 
-export const LOGO_PARAMS = {ang: 37, pu: 90, pv: 62, tw: 80, th: 52};
-/** 顶尖那块地板条的中心 */
-const APEX = [512, 40];
-
-/**
- * 错缝排布：每行沿板长方向（右下），行与行沿左下方向递进，奇数行错开半块。
- * 每行的起止序号按原图逐行对照，共 46 块：
- *   行 0–9 块数 = 5, 5, 6, 6, 6, 6, 5, 4, 3, 0
- */
-const ROWS: [number, number][] = [
-  [0, 4],
-  [-0.5, 3.5],
-  [-1, 4],
-  [-1.5, 3.5],
-  [-1, 4], // 左上角留出缺口
-  [-1.5, 3.5],
-  [-1, 3],
-  [-0.5, 2.5],
-  [0, 2],
-];
+/** 原图中所有地板条尺寸、倾角一致（约 132.6 × 107.8，36.87°），这里统一取均值，位置保持实测值 */
+const TILE_W = 132.6;
+const TILE_H = 107.8;
+const TILE_ROT = 36.87;
 
 const buildTiles = (): Tile[] => {
-  const {ang, pu, pv, tw, th} = LOGO_PARAMS;
-  const a = (ang * Math.PI) / 180;
-  const u = [Math.cos(a), Math.sin(a)];
-  const v = [-Math.sin(a), Math.cos(a)];
-  const raw: Omit<Tile, 'idx'>[] = [];
-  ROWS.forEach(([k0, k1], i) => {
-    for (let k = k0, j = 0; k <= k1 + 1e-6; k += 1, j++) {
-      const x = APEX[0] + u[0] * k * pu + v[0] * i * pv;
-      const y = APEX[1] + u[1] * k * pu + v[1] * i * pv;
-      raw.push({i, j, cx: x, cy: y, w: tw, h: th, rot: ang});
-    }
-  });
-  // 自下而上的堆叠顺序
-  const sorted = [...raw].sort((p, q) => q.cy - p.cy || p.cx - q.cx);
-  return sorted.map((t, idx) => ({...t, idx}));
+  const sorted = [...LOGO_TILE_DATA].sort((p, q) => q.cy - p.cy || p.cx - q.cx);
+  return sorted.map((t, idx) => ({i: t.i, j: t.j, idx, cx: t.cx, cy: t.cy, w: TILE_W, h: TILE_H, rot: TILE_ROT}));
 };
 
 export const LOGO_TILES: Tile[] = buildTiles();
-
-export const TRUNK_PATH =
-  'M452,566 C480,590 504,608 522,630 C540,610 564,590 590,574 C572,616 578,662 614,700 L414,700 C452,668 464,612 452,566 Z';
-export const GROUND_PATH = 'M226,740 Q520,664 798,740 Q520,694 226,740 Z';
 
 export type LogoProps = {
   /** 每块地板条的样式回调：返回 null 表示不渲染 */
@@ -106,16 +74,12 @@ export const AnxinLogoArt: React.FC<LogoProps> = ({
           </g>
         );
       })}
-      <path d={TRUNK_PATH} fill={tileFill} opacity={trunkOpacity} />
-      <path d={GROUND_PATH} fill={tileFill} opacity={groundOpacity} />
+      <path d={TRUNK_PATH} fill={tileFill} opacity={trunkOpacity} fillRule="evenodd" />
+      <path d={GROUND_PATH} fill={tileFill} opacity={groundOpacity} fillRule="evenodd" />
       {showText ? (
-        <g opacity={textOpacity} fill={textColor} style={{fontFamily: sans, fontWeight: 900}}>
-          <text x={6} y={700} fontSize={158} letterSpacing={-2}>
-            安信
-          </text>
-          <text x={700} y={700} fontSize={158} letterSpacing={-2}>
-            地板
-          </text>
+        <g opacity={textOpacity} fill={textColor} fillRule="evenodd">
+          <path d={TEXT_LEFT_PATH} />
+          <path d={TEXT_RIGHT_PATH} />
         </g>
       ) : null}
     </g>
