@@ -52,14 +52,20 @@ export const SHOTS: Shot[] = [
       {zh: '他学船舶设计。造船要懂水，更要懂木头。', en: 'He studied naval architecture. To build ships, you must know water — and wood.'},
       {zh: '一颗种子，就这样埋下了。', en: 'A seed was planted.'},
     ]},
+  {id: 5.5, label: '5+', dur: 7, act: '第二幕 · 人的起点', line: 'B', year: '毕业之后', yearNote: 'THE CHOICE', scene: 's5b',
+    brief: '机关办公室：桌上一只冒热气的“铁饭碗”；他把一封辞呈放在桌上，转身走向门口；门推开，金光涌入，光里是一片木地板的特写',
+    subs: [
+      {zh: '毕业后，他辞去公务员的“铁饭碗”，', en: 'After graduating, he gave up a civil-service job — the “iron rice bowl” —'},
+      {zh: '选择了内心更热爱的木头，从一片木地板开始。', en: 'to follow the wood he truly loved, starting with a single floorboard.'},
+    ]},
   {id: 6, dur: 7, act: '第二幕 · 人的起点', line: 'B', year: '1994.4.8', yearNote: '28 m²', scene: 's6',
     brief: '第一家门店（插画重绘）：黄色门头、红字“安信地板”，镜头缓慢推入',
     subs: [{zh: '1994 年 4 月 8 日，28 平方米的地板店，在温州街头开张了。', en: 'On April 8, 1994, a 28-square-meter flooring shop opened on a Wenzhou street.'}]},
-  {id: 7, dur: 8, act: '第二幕 · 人的起点', line: 'B', year: '1994.7', yearNote: 'THE TREE MARK', scene: 's7',
-    brief: '门头大树 → 手绘稿 → 金色地板条一块块堆叠成树',
+  {id: 7, dur: 8, act: '第二幕 · 人的起点', line: 'B', year: '1994', yearNote: 'THE TREE MARK', scene: 's7',
+    brief: '门头上的绿色大树 → 手绘稿 → 金色地板条一块块堆叠成树（企业 VI 升级后的金色 Logo）',
     subs: [
-      {zh: '三个月后，他亲手设计了“安信”商标：地板堆成的大树。', en: 'Three months later, he designed the Anxin mark himself: a tree built from floorboards.'},
-      {zh: '绿色，是可持续；大树，是可以信赖。', en: 'Green for sustainability. A tree for trust.'},
+      {zh: '他亲手设计了“安信”商标：地板堆成的大树。', en: 'He designed the Anxin mark himself: a tree built from floorboards.'},
+      {zh: '地板来自树木；信赖，要像树一样慢慢长成。', en: 'Floors come from trees. And trust, like a tree, takes time to grow.'},
     ]},
 
   // ───────── 第三幕：雨林里的树 ─────────

@@ -10,6 +10,7 @@ import {S2Lignin} from './scenes/S2Lignin';
 import {S3Forest} from './scenes/S3Forest';
 import {S4Wenzhou} from './scenes/S4Wenzhou';
 import {S5Blueprint} from './scenes/S5Blueprint';
+import {S5bChoice} from './scenes/S5bChoice';
 import {S6Store} from './scenes/S6Store';
 import {S7TreeMark} from './scenes/S7TreeMark';
 import {Factory} from './scenes/Factory';
@@ -21,6 +22,7 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   s3: S3Forest,
   s4: S4Wenzhou,
   s5: S5Blueprint,
+  s5b: S5bChoice,
   s6: S6Store,
   s7: S7TreeMark,
   factory: Factory,

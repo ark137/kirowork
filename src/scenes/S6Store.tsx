@@ -1,9 +1,10 @@
 import React, {useMemo} from 'react';
 import {AbsoluteFill, Easing, interpolate, random, useCurrentFrame} from 'remotion';
-import {C, H, W, sans, serif} from '../theme';
+import {C, H, W, serif} from '../theme';
 import {Paper} from '../components/Paper';
 import {OldPhoto} from '../components/OldPhoto';
-import {AnxinLogoArt} from '../components/AnxinLogo';
+import {AnxinLogoArt, LOGO_H, LOGO_W} from '../components/AnxinLogo';
+import {TEXT_LEFT_PATH, TEXT_RIGHT_PATH} from '../components/logoData';
 
 /**
  * 第 6 镜（7 秒 / 210 帧）：1994.4.8，温州，第一家门店（28 m²）
@@ -17,7 +18,18 @@ const PW = 1040;
 const PH = 693;
 const BASE = W / PW;
 
-export const EMBLEM = {x: 596, y: 128};
+export const EMBLEM = {x: 560, y: 78};
+
+/** 标准组合：树 + 树干 + 地平弧 + “安信 / 地板”红字，按原 Logo 的相对位置整体缩放 */
+const Lockup: React.FC<{cx: number; top: number; h: number; tile: string; text?: string}> = ({cx, top, h, tile, text = '#C51D1D'}) => {
+  const k = h / LOGO_H;
+  const w = LOGO_W * k;
+  return (
+    <g transform={`translate(${cx - w / 2} ${top}) scale(${k})`}>
+      <AnxinLogoArt tileFill={tile} textColor={text} />
+    </g>
+  );
+};
 
 export const S6Store: React.FC = () => {
   const f = useCurrentFrame();
@@ -25,7 +37,7 @@ export const S6Store: React.FC = () => {
   const z1 = interpolate(f, [0, 150], [0.64, 1.2], {...cl, easing: Easing.inOut(Easing.sin)});
   const zoomT = interpolate(f, [150, 210], [0, 1], {...cl, easing: io});
   // 对数空间插值，保证急推时速度均匀
-  const z = Math.exp(Math.log(z1) + (Math.log(5.3) - Math.log(1.2)) * zoomT);
+  const z = Math.exp(Math.log(z1) + (Math.log(4.4) - Math.log(1.2)) * zoomT);
   const cx0 = interpolate(f, [0, 150], [520, 548], cl);
   const cy0 = interpolate(f, [0, 150], [346, 318], cl);
   const cx = cx0 + (EMBLEM.x - cx0) * zoomT;
@@ -125,12 +137,8 @@ const StoreArt: React.FC<{f: number; lights: number}> = ({f, lights}) => {
       {/* 中央灯箱 */}
       <rect x={444} y={346} width={130} height={104} fill="#2A1A12" />
       <g opacity={lights}>
-        <g transform="translate(493 352) scale(0.03)">
-          <AnxinLogoArt tileFill="#4FD06A" showText={false} groundOpacity={0} />
-        </g>
-        <ellipse cx={509} cy={372} rx={30} ry={24} fill="#7CFF9A" opacity={0.25} />
-        <text x={466} y={392} fontFamily={serif} fontWeight={900} fontSize={13} fill="#FF5A3C">安信</text>
-        <text x={520} y={392} fontFamily={serif} fontWeight={900} fontSize={13} fill="#FF5A3C">地板</text>
+        <ellipse cx={509} cy={392} rx={46} ry={38} fill="#7CFF9A" opacity={0.2} />
+        <Lockup cx={509} top={354} h={86} tile="#4FD06A" text="#FF6A48" />
       </g>
       {/* 右侧斜向展示墙板 */}
       {new Array(9).fill(0).map((_, i) => {
@@ -172,19 +180,18 @@ const StoreArt: React.FC<{f: number; lights: number}> = ({f, lights}) => {
           <line key={`b${x}`} x1={x + 18} y1={160} x2={x + 18} y2={238} />
         ))}
       </g>
-      {/* 门头红字 */}
-      <g fill="#C51D1D" fontFamily={serif} fontWeight={900}>
-        <text x={292} y={128} fontSize={84} transform="rotate(-3 330 100)">安</text>
-        <text x={402} y={138} fontSize={82} transform="rotate(4 440 108)">信</text>
-        <text x={706} y={180} fontSize={66} transform="rotate(-4 740 150)">地</text>
-        <text x={784} y={184} fontSize={68} transform="rotate(5 815 155)">板</text>
-        <text x={868} y={150} fontSize={15}>门</text>
-        <text x={868} y={168} fontSize={15}>市</text>
-        <rect x={870} y={176} width={11} height={11} />
+      {/* 门头：按标准 Logo 组合 —— 树居中，“安信”“地板”同字号、同基线、关于树干对称 */}
+      <g fill="#C51D1D">
+        <path d={TEXT_LEFT_PATH} fillRule="evenodd" transform={`translate(${494 - 605 * 0.26} ${160 - 1273 * 0.26}) scale(0.26)`} />
+        <path d={TEXT_RIGHT_PATH} fillRule="evenodd" transform={`translate(${626 - 1238 * 0.26} ${160 - 1273 * 0.26}) scale(0.26)`} />
       </g>
-      {/* 绿色大树商标 */}
-      <g transform={`translate(${EMBLEM.x - 935 * 0.068} 80) scale(0.068)`}>
-        <AnxinLogoArt tileFill="#2E8C4E" showText={false} groundOpacity={0} />
+      <g transform="translate(457.7 20) scale(0.11)">
+        <AnxinLogoArt tileFill="#2E8C4E" showText={false} />
+      </g>
+      <g fill="#C51D1D" fontFamily={serif} fontWeight={900} fontSize={15}>
+        <text x={868} y={150}>门</text>
+        <text x={868} y={168}>市</text>
+        <rect x={870} y={176} width={11} height={11} />
       </g>
 
       {/* 挂旗 */}
@@ -258,9 +265,7 @@ const StoreArt: React.FC<{f: number; lights: number}> = ({f, lights}) => {
             </g>
           ) : null}
           {i === 1 ? (
-            <g transform={`translate(${x + 9} ${y + 8}) scale(0.028)`}>
-              <AnxinLogoArt tileFill="#3FA05A" showText={false} groundOpacity={0} />
-            </g>
+            <Lockup cx={x + w / 2} top={y + 24} h={46} tile="#3FA05A" />
           ) : null}
           {i === 2 ? (
             <g>
@@ -288,13 +293,7 @@ const StoreArt: React.FC<{f: number; lights: number}> = ({f, lights}) => {
       <rect x={106} y={392} width={4} height={300} fill="#E6E4DE" />
       <rect x={236} y={392} width={4} height={300} fill="#E6E4DE" />
       <rect x={120} y={328} width={124} height={64} fill="#F7F6F1" stroke="#CFCBC0" strokeWidth={2} />
-      <g transform="translate(168 332) scale(0.03)">
-        <AnxinLogoArt tileFill="#2E9A54" showText={false} groundOpacity={0} />
-      </g>
-      <g fill="#C51D1D" fontFamily={serif} fontWeight={900} fontSize={13}>
-        <text x={130} y={384}>安信</text>
-        <text x={202} y={384}>地板</text>
-      </g>
+      <Lockup cx={182} top={331} h={58} tile="#2E9A54" />
       {['#E4E0D8', '#E8CFA2', '#DDBB86', '#E6C895', '#D9AE74', '#E9D2AA', '#D7A96E', '#B4302A'].map((c, i) => {
         const y = 412 + i * 30;
         return (
@@ -340,4 +339,4 @@ const StoreArt: React.FC<{f: number; lights: number}> = ({f, lights}) => {
   );
 };
 
-export const _unused = {sans};
+

@@ -134,7 +134,8 @@ export const S4Wenzhou: React.FC = () => {
       </svg>
 
       {/* 落款：竖排名字 + 红印 */}
-      <div style={{position: 'absolute', right: 210, top: 150, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      {/* 固定宽度 + 固定位置：避免印章出现时整列因 shrink-to-fit 重新计算宽度而横向跳动 */}
+      <div style={{position: 'absolute', left: 1555, top: 150, width: 180, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <div
           style={{
             writingMode: 'vertical-rl',
