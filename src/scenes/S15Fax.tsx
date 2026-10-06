@@ -35,7 +35,7 @@ export const S15Fax: React.FC = () => {
             <stop offset="0%" stopColor="#56688A" />
             <stop offset="100%" stopColor="#6C7C98" />
           </linearGradient>
-          <radialGradient id="s15-lamp" cx="50%" cy="0%" r="80%">
+          <radialGradient id="s15-lamp" cx="50%" cy="20%" r="70%">
             <stop offset="0%" stopColor="#FFE2A8" stopOpacity={0.75} />
             <stop offset="100%" stopColor="#FFE2A8" stopOpacity={0} />
           </radialGradient>
@@ -78,7 +78,7 @@ export const S15Fax: React.FC = () => {
             <path d="M1060,520 L1120,420 L1180,520 Z" fill="#3E4A3A" />
             <rect x={1114} y={520} width={12} height={160} fill="#3E4A3A" />
             <ellipse cx={1120} cy={690} rx={60} ry={12} fill="#3E4A3A" />
-            <rect x={900} y={520} width={440} height={400} fill="url(#s15-lamp)" />
+            <ellipse cx={1120} cy={700} rx={340} ry={220} fill="url(#s15-lamp)" />
           </g>
           {/* 桌面 */}
           <rect x={-100} y={780} width={W + 200} height={320} fill="#7A5A3E" />

@@ -110,7 +110,7 @@ export const S14Clocks: React.FC = () => {
         })}
 
         {/* 拨号计数（正字记号） */}
-        <g transform="translate(1500 760)" opacity={appear}>
+        <g transform="translate(1690 790)" opacity={appear}>
           <text x={0} y={-16} fontFamily={sans} fontSize={18} letterSpacing={4} fill={C.inkMute}>
             拨出次数
           </text>
