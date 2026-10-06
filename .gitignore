@@ -5,3 +5,4 @@ out/chk/
 out/*.mp4
 !out/stage1-preview.mp4
 !out/stage2-preview.mp4
+!out/stage3-preview.mp4
