@@ -1,2 +1,5 @@
 node_modules
 out/stage1/
+out/chunks/
+out/chk/
+out/*.mp4

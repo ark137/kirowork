@@ -6,8 +6,9 @@ import {OldPhoto} from '../components/OldPhoto';
 import {AnxinLogoArt} from '../components/AnxinLogo';
 
 /**
- * 第 8 镜（5 秒 / 150 帧）：1997，上海青浦
- * 扁平矢量：小店缩小沉下 → 锯齿屋顶厂房一跨一跨升起 → 烟囱、货车、木材堆，镜头后拉
+ * 第 19 镜（5 秒 / 150 帧）：1999，上海青浦
+ * 承接卫星轮伐镜头：巴西原木运抵 → 锯齿屋顶厂房一跨一跨升起 → 烟囱冒烟、金色厂牌亮起，镜头缓缓后拉
+ * （工厂建成于 1999 年，排在雨林与轮伐之后：木头有了着落，才有自己的工厂）
  */
 const cl = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 const GROUND = 780;
@@ -15,14 +16,13 @@ const BAYS = 7;
 const BAY_W = 150;
 const FX = 520; // 厂房左端
 
-export const S8Factory: React.FC = () => {
+export const Factory: React.FC = () => {
   const f = useCurrentFrame();
   const out = Easing.out(Easing.cubic);
-  const shop = interpolate(f, [0, 30], [1, 0], {...cl, easing: Easing.in(Easing.cubic)});
-  const bay = (i: number) => interpolate(f, [18 + i * 7, 50 + i * 7], [0, 1], {...cl, easing: Easing.out(Easing.back(1.2))});
-  const office = interpolate(f, [56, 86], [0, 1], {...cl, easing: out});
-  const sign = interpolate(f, [80, 104], [0, 1], {...cl, easing: out});
-  const truckX = interpolate(f, [70, 150], [-300, 360], {...cl, easing: Easing.out(Easing.quad)});
+  const bay = (i: number) => interpolate(f, [26 + i * 7, 58 + i * 7], [0, 1], {...cl, easing: Easing.out(Easing.back(1.2))});
+  const office = interpolate(f, [62, 92], [0, 1], {...cl, easing: out});
+  const sign = interpolate(f, [86, 110], [0, 1], {...cl, easing: out});
+  const truckX = interpolate(f, [0, 70], [-380, 300], {...cl, easing: Easing.out(Easing.quad)});
   const zoom = interpolate(f, [0, 150], [1.12, 1], {...cl, easing: Easing.inOut(Easing.sin)});
 
   return (
@@ -54,17 +54,6 @@ export const S8Factory: React.FC = () => {
           <g stroke="#F6EEDC" strokeWidth={4} strokeDasharray="40 30">
             <line x1={-200} y1={GROUND + 95} x2={W + 200} y2={GROUND + 95} />
           </g>
-
-          {/* 原来的小店，缩小沉入 */}
-          {shop > 0 ? (
-            <g transform={`translate(300 ${GROUND}) scale(${0.6 + shop * 0.4}) translate(0 ${(1 - shop) * 60})`} opacity={shop}>
-              <rect x={-90} y={-150} width={180} height={150} fill="#F2D33A" />
-              <rect x={-60} y={-90} width={120} height={90} fill="#5A3A26" />
-              <g transform="translate(-14 -146) scale(0.026)">
-                <AnxinLogoArt tileFill="#2E8C4E" showText={false} groundOpacity={0} />
-              </g>
-            </g>
-          ) : null}
 
           {/* 锯齿屋顶厂房 */}
           {new Array(BAYS).fill(0).map((_, i) => {

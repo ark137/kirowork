@@ -12,7 +12,7 @@ import {S4Wenzhou} from './scenes/S4Wenzhou';
 import {S5Blueprint} from './scenes/S5Blueprint';
 import {S6Store} from './scenes/S6Store';
 import {S7TreeMark} from './scenes/S7TreeMark';
-import {S8Factory} from './scenes/S8Factory';
+import {Factory} from './scenes/Factory';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -23,7 +23,7 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   s5: S5Blueprint,
   s6: S6Store,
   s7: S7TreeMark,
-  s8: S8Factory,
+  factory: Factory,
 };
 
 const LEAD_IN = 8;

@@ -61,46 +61,43 @@ export const SHOTS: Shot[] = [
       {zh: '三个月后，他亲手设计了“安信”商标：地板堆成的大树。', en: 'Three months later, he designed the Anxin mark himself: a tree built from floorboards.'},
       {zh: '绿色，是可持续；大树，是可以信赖。', en: 'Green for sustainability. A tree for trust.'},
     ]},
-  {id: 8, dur: 5, act: '第二幕 · 人的起点', line: 'B', year: '1997', yearNote: 'QINGPU, SHANGHAI', scene: 's8',
-    brief: '小店变成厂房，上海青浦的工厂拔地而起',
-    subs: [{zh: '三年，他完成了原始积累，在上海青浦建起了自己的工厂。', en: 'In three years, he built his own factory in Qingpu, Shanghai.'}]},
 
   // ───────── 第三幕：雨林里的树 ─────────
-  {id: 9, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', year: '数千万年后', yearNote: 'AMAZONIA', scene: 's9',
+  {id: 8, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', year: '数千万年后', yearNote: 'AMAZONIA', scene: 'amazon',
     brief: '大陆漂移，南美成形，水汽汇聚，雨林俯瞰，云雾升腾',
     subs: [
       {zh: '又过了很久很久，南美的雨水、阳光和河流，', en: 'Ages later, the rain, sun and rivers of South America'},
       {zh: '养出了亚马逊，地球上最大的热带雨林。', en: 'raised the Amazon — the largest rainforest on Earth.'},
     ]},
-  {id: 10, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', scene: 's10',
+  {id: 9, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', scene: 'canopy',
     brief: '同一片林子里，树为了争阳光，长成不同的模样',
     subs: [{zh: '为了抢到一缕阳光，树长成了各自的样子。', en: 'Reaching for a ray of light, each tree grew into its own shape.'}]},
 
   // ───────── 第四幕：断粮 ─────────
-  {id: 11, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'LOGGING BAN', scene: 's11',
+  {id: 10, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'LOGGING BAN', scene: 'ban',
     brief: '一纸公文盖下红章“禁止砍伐”，木材堆渐渐变空',
     subs: [
       {zh: '1998 年，一纸公文，国家禁止砍伐森林资源。', en: 'In 1998, a national decree banned the logging of forests.'},
       {zh: '原料的来路，被一刀斩断。', en: 'His supply of timber was cut off overnight.'},
     ]},
-  {id: 12, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', scene: 's12',
+  {id: 11, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', scene: 'chain',
     brief: '一条木材供应链，中间被一只手掐住',
     subs: [{zh: '他想去巴西进口木材，可海外的货源，都攥在中间商手里。', en: 'He wanted to import from Brazil, but middlemen held every overseas source.'}]},
-  {id: 13, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'THE DOCKS', scene: 's13', subTone: 'light',
+  {id: 12, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'THE DOCKS', scene: 'docks', subTone: 'light',
     brief: '码头货柜，混在搬运工里的身影翻看包装箱，手电光',
     subs: [{zh: '他混在搬运工中间，一箱一箱地看包装，找一个线索。', en: 'Among the dockworkers, he searched crate after crate for a single clue.'}]},
 
   // ───────── 第五幕：一纸传真 ─────────
-  {id: 14, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998.7', scene: 's14',
+  {id: 13, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998.7', scene: 'tape',
     brief: '特写：一卷封箱胶带，印着电话和传真号码',
     subs: [{zh: '1998 年 7 月，他在一卷封箱胶带上，找到了一个巴西供应商的电话。', en: 'In July 1998, on a roll of packing tape, he found a Brazilian supplier’s number.'}]},
-  {id: 15, dur: 7, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 's15',
+  {id: 14, dur: 7, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 'clocks',
     brief: '温州与巴西两个钟面，相差 11 小时；电话不停拨出',
     subs: [
       {zh: '他不懂葡萄牙语，对方不懂中文。', en: 'He spoke no Portuguese; they spoke no Chinese.'},
       {zh: '隔着 11 个小时的时差，他一直拨。', en: 'Across an 11-hour time difference, he kept dialing.'},
     ]},
-  {id: 16, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 's16', subTone: 'light',
+  {id: 15, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 'fax', subTone: 'light',
     brief: '传真纸一张张飞出，没有回音；夜里，传真机忽然亮了',
     subs: [
       {zh: '一个多月后，传真机响了。', en: 'More than a month later, the fax machine rang.'},
@@ -108,13 +105,13 @@ export const SHOTS: Shot[] = [
     ]},
 
   // ───────── 第六幕：相遇 ─────────
-  {id: 17, dur: 8, act: '第六幕 · 相遇', line: 'AB', year: '1999', yearNote: 'AMAZONIA', scene: 's17',
+  {id: 16, dur: 8, act: '第六幕 · 相遇', line: 'AB', year: '1999', yearNote: 'AMAZONIA', scene: 'meet',
     brief: '雨林深处，一个人手扶巨树；年轮与时间轴合并',
     subs: [{zh: '四亿年长出的树，等来了一个找它的人。', en: 'A tree four hundred million years in the making met the man who came looking for it.'}]},
-  {id: 18, dur: 5, act: '第六幕 · 相遇', line: 'AB', year: '1999', scene: 's18',
+  {id: 17, dur: 5, act: '第六幕 · 相遇', line: 'AB', year: '1999', scene: 'nameplates',
     brief: '四张树种名牌：Ipe 重蚁木、Cumaru 二翅豆、Garapa 铁苏木、Balsamo 香脂木豆',
     subs: [{zh: '他在雨林里，找到了最适合的木头。', en: 'In the rainforest, he found the perfect wood.'}]},
-  {id: 19, dur: 9, act: '第六幕 · 相遇', line: 'B', year: '1999 起', yearNote: 'SATELLITE ROTATION', scene: 's19',
+  {id: 18, dur: 9, act: '第六幕 · 相遇', line: 'B', year: '1999 起', yearNote: 'SATELLITE ROTATION', scene: 'satellite',
     brief: '卫星遥感视角，林区分成 25 块，一块采伐，一块重新种上',
     subs: [
       {zh: '卫星遥感把林区分成 25 块，每年只采一块，采完就种。', en: 'Satellites divide the forest into 25 plots. One is harvested each year, then replanted.'},
@@ -122,6 +119,9 @@ export const SHOTS: Shot[] = [
     ]},
 
   // ───────── 第七幕：走出去 ─────────
+  {id: 19, dur: 5, act: '第七幕 · 走出去', line: 'B', year: '1999', yearNote: 'QINGPU, SHANGHAI', scene: 'factory',
+    brief: '卫星格网淡出，原木运抵上海青浦；厂房一跨一跨拔地而起，烟囱冒烟，金色厂牌亮起——根，先扎在上海',
+    subs: [{zh: '1999 年，木头有了着落，他在上海青浦建起了自己的工厂。', en: 'In 1999, with timber secured, he built his own factory in Qingpu, Shanghai.'}]},
   {id: 20, dur: 8, act: '第七幕 · 走出去', line: 'B', year: '2004–2006', scene: 's20',
     brief: '时间轴：拉美四国；收购美国 ARK FLOORS；凯雷注资 5000 万美金；投资非洲木材',
     subs: [
