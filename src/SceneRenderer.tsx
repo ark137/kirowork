@@ -25,6 +25,8 @@ import {S15Fax} from './scenes/S15Fax';
 import {SMeet} from './scenes/SMeet';
 import {SNameplates} from './scenes/SNameplates';
 import {SSatellite} from './scenes/SSatellite';
+import {S20World} from './scenes/S20World';
+import {S21Landmarks} from './scenes/S21Landmarks';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -48,6 +50,8 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   meet: SMeet,
   nameplates: SNameplates,
   satellite: SSatellite,
+  s20: S20World,
+  s21: S21Landmarks,
 };
 
 const LEAD_IN = 8;
