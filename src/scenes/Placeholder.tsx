@@ -14,7 +14,7 @@ export const Placeholder: React.FC<{shots: Shot[]}> = ({shots}) => {
       <Paper />
       <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center', transform: `scale(${zoom})`}}>
         <div style={{fontFamily: serif, fontSize: 260, color: C.goldLight, opacity: 0.5, lineHeight: 1}}>
-          {String(s.id).padStart(2, '0')}
+          {s.label ?? String(s.id).padStart(2, '0')}
         </div>
         <div style={{fontFamily: sans, fontSize: 22, letterSpacing: '0.4em', color: C.goldDeep, marginTop: 10}}>
           {s.act}

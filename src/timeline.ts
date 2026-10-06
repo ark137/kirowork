@@ -4,6 +4,8 @@ export type Sub = {zh: string; en: string};
 
 export type Shot = {
   id: number;
+  /** 非剧本编号镜头的显示标签（如标题卡 'T'） */
+  label?: string;
   /** 秒 */
   dur: number;
   act: string;
@@ -26,6 +28,8 @@ export const SHOTS: Shot[] = [
     subs: [{zh: '一棵树，要长多少年？', en: 'How many years does it take to grow a tree?'}]},
   {id: 1, dur: 4, act: '序章', line: '—', scene: 'prologue', brief: '年轮继续扩大，化作地平线上的落日，一个人的剪影浮现',
     subs: [{zh: '一个人，又要走多远？', en: 'And how far must a man walk?'}]},
+  {id: 1.5, label: 'T', dur: 4, act: '片名', line: '—', scene: 'prologue',
+    brief: '标题卡：年轮落日前，主标题《一棵树的秘密》落笔显现，副标题“安信地板的前世今生”', subs: []},
 
   // ───────── 第一幕：木的诞生 ─────────
   {id: 2, dur: 7, act: '第一幕 · 木的诞生', line: 'A', year: '约 4 亿年前', yearNote: 'DEVONIAN', scene: 's2',
@@ -159,7 +163,7 @@ export const SHOTS: Shot[] = [
     brief: '年轮长回金色大树，“安信地板”浮现，收束在 Logo',
     subs: [
       {zh: '安信地板。', en: 'Anxin Flooring.'},
-      {zh: '一棵树，长了四亿年；一个信字，守了三十多年。', en: 'A tree, four hundred million years in the growing. A promise, kept for over thirty.'},
+      {zh: '树的秘密，是时间；人的秘密，是一个信字。', en: 'The secret of a tree is time. The secret of a man is a single word: trust.'},
     ]},
 ];
 

@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {AbsoluteFill, Easing, interpolate, useCurrentFrame} from 'remotion';
-import {C, H, W, serif} from '../theme';
+import {C, H, W, sans, serif} from '../theme';
 import {Paper} from '../components/Paper';
 import {TreeRings, makeRings} from '../components/TreeRings';
 import {GoldDust} from '../components/GoldDust';
@@ -41,10 +41,14 @@ export const Prologue: React.FC = () => {
   const scale =
     f < 150
       ? interpolate(f, [0, 150], [1.9, 1.0], {...clampOpt, easing: Easing.out(Easing.quad)})
-      : interpolate(f, [150, 270], [1.0, 0.66], {...clampOpt, easing: Easing.inOut(Easing.cubic)});
+      : f < 270
+        ? interpolate(f, [150, 270], [1.0, 0.66], {...clampOpt, easing: Easing.inOut(Easing.cubic)})
+        : interpolate(f, [270, 390], [0.66, 0.7], {...clampOpt, easing: Easing.out(Easing.quad)});
+  // 标题卡阶段：年轮退为背景
+  const titleDim = interpolate(f, [266, 300], [1, 0.42], clampOpt);
   const cy = interpolate(f, [140, 240], [H / 2 - 20, HORIZON - 6], {...clampOpt, easing: Easing.inOut(Easing.cubic)});
   const cx = W / 2;
-  const rot = interpolate(f, [0, 270], [0, 6]);
+  const rot = interpolate(f, [0, 390], [0, 8.5]);
 
   // 中心金点
   const dotIn = interpolate(f, [0, 14], [0, 1], clampOpt);
@@ -120,7 +124,7 @@ export const Prologue: React.FC = () => {
         </defs>
 
         {/* 年轮 */}
-        <g transform={`translate(${cx} ${cy}) scale(${scale}) rotate(${rot})`}>
+        <g transform={`translate(${cx} ${cy}) scale(${scale}) rotate(${rot})`} opacity={titleDim}>
           <circle r={260} fill="url(#sun-wash)" opacity={0.5 + rays * 0.5} />
           <TreeRings rings={rings} progress={progress} strokeScale={1 / Math.max(0.75, scale)} />
           <circle r={70 * pulse} fill="url(#dot-glow)" opacity={dotIn} />
@@ -214,6 +218,119 @@ export const Prologue: React.FC = () => {
       </svg>
 
       <GoldDust opacity={dustIn * 0.8} />
+      {f >= 262 ? <TitleCard f={f - 270} /> : null}
+    </AbsoluteFill>
+  );
+};
+
+/**
+ * 片名卡（4 秒 / 120 帧，局部帧 0–120）
+ * 年轮落日之上：主标题逐字墨晕落笔 → 红印“安信”钤下 → 金线展开副标题 → 英文
+ */
+const TITLE = Array.from('一棵树的秘密');
+const TitleCard: React.FC<{f: number}> = ({f}) => {
+  const e = Easing.out(Easing.cubic);
+  const halo = interpolate(f, [-8, 30], [0, 1], {...clampOpt, easing: e});
+  const seal = interpolate(f, [44, 56], [0, 1], {...clampOpt, easing: Easing.out(Easing.back(2.2))});
+  const lineP = interpolate(f, [50, 78], [0, 1], {...clampOpt, easing: Easing.inOut(Easing.cubic)});
+  const subP = interpolate(f, [58, 82], [0, 1], {...clampOpt, easing: e});
+  const enP = interpolate(f, [70, 94], [0, 1], {...clampOpt, easing: e});
+  const drift = interpolate(f, [0, 120], [8, -6]);
+
+  return (
+    <AbsoluteFill style={{alignItems: 'center', justifyContent: 'flex-start', paddingTop: 300, transform: `translateY(${drift}px)`}}>
+      {/* 标题背后的宣纸光晕，保证可读 */}
+      <div
+        style={{
+          position: 'absolute',
+          top: 170,
+          width: 1500,
+          height: 520,
+          opacity: halo,
+          background: 'radial-gradient(ellipse 50% 50% at 50% 50%, rgba(251,246,236,0.92) 0%, rgba(251,246,236,0.6) 45%, rgba(251,246,236,0) 75%)',
+        }}
+      />
+      <div style={{position: 'relative', display: 'flex', alignItems: 'center'}}>
+        <div style={{fontFamily: serif, fontWeight: 700, fontSize: 132, letterSpacing: '0.16em', color: C.ink, whiteSpace: 'nowrap'}}>
+          {TITLE.map((ch, i) => {
+            const p = interpolate(f, [i * 5, i * 5 + 22], [0, 1], {...clampOpt, easing: e});
+            return (
+              <span
+                key={i}
+                style={{
+                  display: 'inline-block',
+                  opacity: p,
+                  filter: `blur(${(1 - p) * 14}px)`,
+                  transform: `translateY(${(1 - p) * 18}px) scale(${1.08 - 0.08 * p})`,
+                  textShadow: `0 0 ${24 * (1 - p)}px rgba(42,36,30,0.5)`,
+                }}
+              >
+                {ch}
+              </span>
+            );
+          })}
+        </div>
+        {/* 红印 */}
+        <div
+          style={{
+            marginLeft: 6,
+            width: 74,
+            height: 74,
+            background: C.seal,
+            borderRadius: 6,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: serif,
+            fontWeight: 700,
+            fontSize: 30,
+            lineHeight: 1.05,
+            color: '#FBEFE2',
+            opacity: Math.min(1, seal * 1.4),
+            transform: `scale(${1.6 - 0.6 * seal}) rotate(${-4 * seal}deg)`,
+            boxShadow: 'inset 0 0 6px rgba(80,10,10,0.45)',
+          }}
+        >
+          <span>安</span>
+          <span>信</span>
+        </div>
+      </div>
+
+      {/* 副标题 */}
+      <div style={{marginTop: 44, display: 'flex', alignItems: 'center', gap: 28}}>
+        <div style={{width: 150 * lineP, height: 1.5, background: `linear-gradient(90deg, rgba(185,121,15,0), ${C.goldDeep})`}} />
+        <div
+          style={{
+            fontFamily: sans,
+            fontWeight: 500,
+            fontSize: 38,
+            letterSpacing: '0.42em',
+            color: C.goldAntique,
+            opacity: subP,
+            filter: `blur(${(1 - subP) * 6}px)`,
+            marginRight: '-0.42em',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          安信地板的前世今生
+        </div>
+        <div style={{width: 150 * lineP, height: 1.5, background: `linear-gradient(90deg, ${C.goldDeep}, rgba(185,121,15,0))`}} />
+      </div>
+      <div
+        style={{
+          marginTop: 22,
+          fontFamily: serif,
+          fontStyle: 'italic',
+          fontSize: 24,
+          letterSpacing: '0.12em',
+          color: C.inkMute,
+          opacity: enP,
+          transform: `translateY(${(1 - enP) * 8}px)`,
+        }}
+      >
+        The Secret of a Tree — The Story of Anxin Flooring
+      </div>
     </AbsoluteFill>
   );
 };
