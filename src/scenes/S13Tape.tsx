@@ -23,7 +23,7 @@ export const S13Tape: React.FC = () => {
   const rollX = interpolate(unroll, [0, 1], [-200, 2240]);
   const scroll = interpolate(f, [0, 70], [600, 0], {...cl, easing: Easing.out(Easing.cubic)});
   const zoom = interpolate(f, [70, 130], [1, 1.9], {...cl, easing: io});
-  const focus = {x: 1000, y: TAPE_Y + TAPE_H / 2};
+  const focus = {x: 820, y: TAPE_Y + TAPE_H / 2};
   const circle = interpolate(f, [112, 150], [0, 1], {...cl, easing: io});
   const glow = interpolate(f, [130, 170], [0, 1], cl);
 
@@ -96,10 +96,10 @@ export const S13Tape: React.FC = () => {
             </g>
           ) : null}
           {/* 金色手绘圈 */}
-          <g>
-            <ellipse cx={1000} cy={focus.y} rx={260} ry={70} fill="url(#s13-glow)" opacity={glow} />
+          <g transform="translate(0 0)">
+            <ellipse cx={820} cy={focus.y} rx={250} ry={70} fill="url(#s13-glow)" opacity={glow} />
             <path
-              d={`M760,${focus.y - 10} C760,${focus.y - 70} 1240,${focus.y - 80} 1250,${focus.y - 6} C1260,${focus.y + 60} 780,${focus.y + 74} 770,${focus.y + 6} C764,${focus.y - 30} 820,${focus.y - 60} 900,${focus.y - 66}`}
+              d={`M590,${focus.y - 10} C590,${focus.y - 70} 1046,${focus.y - 80} 1056,${focus.y - 6} C1066,${focus.y + 60} 610,${focus.y + 74} 600,${focus.y + 6} C594,${focus.y - 30} 650,${focus.y - 60} 730,${focus.y - 66}`}
               fill="none"
               stroke={C.gold}
               strokeWidth={8}
@@ -133,6 +133,7 @@ export const S13Tape: React.FC = () => {
       </div>
       <GoldDust count={24} seed="s13d" opacity={glow * 0.8} />
       <OldPhoto strength={0.5} seed="s13" leak={false} />
+      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(251,246,236,0) 74%, rgba(251,246,236,0.78) 90%, rgba(251,246,236,0.88) 100%)'}} />
     </AbsoluteFill>
   );
 };

@@ -20,6 +20,8 @@ import {S10Ban} from './scenes/S10Ban';
 import {S11Chain} from './scenes/S11Chain';
 import {S12Docks} from './scenes/S12Docks';
 import {S13Tape} from './scenes/S13Tape';
+import {S14Clocks} from './scenes/S14Clocks';
+import {S15Fax} from './scenes/S15Fax';
 
 /** scene key → 画面组件；未登记的场景显示占位卡 */
 export const SCENE_COMPONENTS: Record<string, React.FC> = {
@@ -38,6 +40,8 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   chain: S11Chain,
   docks: S12Docks,
   tape: S13Tape,
+  clocks: S14Clocks,
+  fax: S15Fax,
 };
 
 const LEAD_IN = 8;
