@@ -14,8 +14,8 @@ import {smoothNoise} from '../lib/geom';
 const cl = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
 
 // 简化的大陆轮廓（各自局部坐标）
-const SA = [[130,20],[200,10],[262,40],[322,72],[392,128],[404,172],[372,222],[334,272],[302,332],[252,384],[222,432],[192,482],[170,506],[158,472],[170,420],[160,362],[150,302],[120,242],[80,202],[58,150],[80,100],[110,60]];
-const AF = [[100,20],[220,0],[300,30],[342,82],[420,150],[440,182],[402,232],[372,302],[332,382],[292,442],[262,482],[232,472],[212,402],[200,332],[180,272],[140,242],[80,232],[30,200],[10,150],[30,80]];
+const SA = [[90,40],[170,20],[250,40],[330,90],[400,140],[422,190],[392,250],[352,300],[322,350],[290,382],[252,422],[222,472],[202,522],[180,562],[168,582],[158,542],[168,482],[164,422],[150,352],[128,282],[90,222],[60,172],[54,122],[70,80]];
+const AF = [[110,10],[200,0],[300,10],[350,30],[382,52],[402,122],[452,172],[470,182],[422,242],[402,302],[382,362],[332,432],[292,482],[252,502],[230,496],[210,432],[200,362],[190,302],[160,252],[110,242],[60,232],[20,192],[0,142],[20,80],[60,40]];
 const RIVER = 'M92,170 C130,150 160,182 196,166 C232,150 252,178 288,162 C320,148 344,156 372,148';
 const TRIBS = ['M150,170 C140,210 130,240 120,268', 'M196,166 C200,210 214,246 230,272', 'M252,170 C262,130 252,100 236,80', 'M300,160 C312,200 316,236 300,270', 'M330,154 C340,120 330,96 318,74'];
 
@@ -46,7 +46,7 @@ export const S8Amazon: React.FC = () => {
   const mapZoom = interpolate(f, [70, 112], [1, 3.6], {...cl, easing: Easing.in(Easing.cubic)});
   const mapOpacity = interpolate(f, [96, 114], [1, 0], cl);
   const saX = 640 - drift * 120;
-  const afX = 860 + drift * 190;
+  const afX = 1000 + drift * 200;
   const saPath = useMemo(() => blob(SA, 'sa'), []);
   const afPath = useMemo(() => blob(AF, 'af'), []);
 
@@ -95,7 +95,7 @@ export const S8Amazon: React.FC = () => {
             ))}
           </g>
           {/* 非洲 */}
-          <g transform={`translate(${afX} 300) rotate(${drift * 6})`}>
+          <g transform={`translate(${afX} 262) rotate(${drift * 5} 230 250)`}>
             <path d={afPath} fill={C.paperDeep} stroke={C.inkSoft} strokeWidth={3} strokeOpacity={0.6} filter="url(#s8-bleed)" />
           </g>
           {/* 南美 */}
@@ -149,7 +149,13 @@ export const S8Amazon: React.FC = () => {
                   .map((c, i) => (
                     <g key={i}>
                       {c.puffs.map((p, k) => (
-                        <circle key={k} cx={p.x} cy={p.y} r={p.r} fill={[['#B9C7A2', '#A9B98E'], ['#8FA676', '#7E9766'], ['#5F7F55', '#4F7048']][layer][k % 2]} opacity={[0.55, 0.8, 0.95][layer]} />
+                        <circle key={`s${k}`} cx={p.x + 8} cy={p.y + 12} r={p.r} fill={['#93A27E', '#61795A', '#3C5638'][layer]} opacity={[0.35, 0.55, 0.7][layer]} />
+                      ))}
+                      {c.puffs.map((p, k) => (
+                        <circle key={k} cx={p.x} cy={p.y} r={p.r * 0.92} fill={[['#B9C7A2', '#A9B98E'], ['#8FA676', '#7E9766'], ['#5F7F55', '#4F7048']][layer][k % 2]} opacity={[0.6, 0.85, 0.95][layer]} />
+                      ))}
+                      {c.puffs.slice(0, 3).map((p, k) => (
+                        <circle key={`h${k}`} cx={p.x - p.r * 0.3} cy={p.y - p.r * 0.35} r={p.r * 0.35} fill="#E9EFCF" opacity={[0.2, 0.25, 0.22][layer]} />
                       ))}
                     </g>
                   ))}
@@ -189,8 +195,8 @@ type Crown = {layer: number; puffs: {x: number; y: number; r: number}[]};
 const buildCrowns = (): Crown[] => {
   const out: Crown[] = [];
   const conf = [
-    {layer: 0, n: 60, r: [40, 70], yMin: -100, yMax: 1200},
-    {layer: 1, n: 70, r: [55, 95], yMin: -100, yMax: 1200},
+    {layer: 0, n: 90, r: [40, 70], yMin: -100, yMax: 1200},
+    {layer: 1, n: 90, r: [55, 95], yMin: -100, yMax: 1200},
     {layer: 2, n: 26, r: [80, 130], yMin: 650, yMax: 1250},
   ];
   for (const c of conf) {
@@ -198,11 +204,11 @@ const buildCrowns = (): Crown[] => {
       const cx = random(`cx${c.layer}${i}`) * (W + 400) - 200;
       const cy = c.yMin + random(`cy${c.layer}${i}`) * (c.yMax - c.yMin);
       const r = c.r[0] + random(`cr${c.layer}${i}`) * (c.r[1] - c.r[0]);
-      const puffs = new Array(5).fill(0).map((_, k) => ({
-        x: cx + Math.cos((k / 5) * Math.PI * 2) * r * 0.45,
-        y: cy + Math.sin((k / 5) * Math.PI * 2) * r * 0.4,
-        r: r * (0.55 + random(`pr${c.layer}${i}${k}`) * 0.25),
-      }));
+      const puffs = new Array(8).fill(0).map((_, k) => {
+        const a = (k / 8) * Math.PI * 2 + random(`pa${c.layer}${i}`) * 3;
+        const d = r * (0.25 + random(`pd${c.layer}${i}${k}`) * 0.35);
+        return {x: cx + Math.cos(a) * d, y: cy + Math.sin(a) * d * 0.85, r: r * (0.38 + random(`pr${c.layer}${i}${k}`) * 0.2)};
+      });
       out.push({layer: c.layer, puffs});
     }
   }

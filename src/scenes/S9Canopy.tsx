@@ -20,7 +20,7 @@ const TREES: Spec[] = [
   {kind: 'round', x: 220, h: 430, w: 300, delay: 0, speed: 70, tone: 1},
   {kind: 'palm', x: 470, h: 520, w: 260, delay: 8, speed: 70, tone: 2},
   {kind: 'buttress', x: 760, h: 640, w: 380, delay: 4, speed: 90, tone: 2},
-  {kind: 'umbrella', x: 1060, h: 860, w: 520, delay: 14, speed: 120, tone: 3},
+  {kind: 'umbrella', x: 1060, h: 730, w: 560, delay: 14, speed: 120, tone: 3},
   {kind: 'cone', x: 1360, h: 560, w: 220, delay: 6, speed: 80, tone: 1},
   {kind: 'vine', x: 1600, h: 600, w: 300, delay: 10, speed: 90, tone: 2},
   {kind: 'round', x: 1830, h: 380, w: 280, delay: 2, speed: 70, tone: 1},
@@ -31,7 +31,7 @@ export const S9Canopy: React.FC = () => {
   const f = useCurrentFrame();
   const light = interpolate(f, [0, 50], [0.3, 1], cl);
   const crown = interpolate(f, [120, 170], [0, 1], {...cl, easing: Easing.out(Easing.cubic)});
-  const camY = interpolate(f, [0, 180], [60, -40], {...cl, easing: Easing.inOut(Easing.sin)});
+  const camY = interpolate(f, [0, 180], [70, 20], {...cl, easing: Easing.inOut(Easing.sin)});
   const geo = useMemo(() => TREES.map((t, i) => ({...t, ...build(t, i)})), []);
 
   return (
@@ -48,13 +48,17 @@ export const S9Canopy: React.FC = () => {
             <stop offset="0%" stopColor="#FFF4D4" />
             <stop offset="100%" stopColor="#FFF4D4" stopOpacity={0} />
           </radialGradient>
+          <radialGradient id="s9-crownglow">
+            <stop offset="0%" stopColor="#FFE9A8" stopOpacity={0.85} />
+            <stop offset="100%" stopColor="#FFE9A8" stopOpacity={0} />
+          </radialGradient>
           <linearGradient id="s9-floor" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#D6CBA8" />
             <stop offset="100%" stopColor="#C4B48E" />
           </linearGradient>
           {geo.map((g, i) => (
             <clipPath key={i} id={`s9-grow-${i}`}>
-              <rect x={g.x - g.w} width={g.w * 2} y={GROUND - (g.h + 80) * grow(f, g)} height={(g.h + 80) * grow(f, g) + 100} />
+              <rect x={g.x - g.w * 1.2} width={g.w * 2.4} y={GROUND - (g.h + 220) * grow(f, g)} height={(g.h + 220) * grow(f, g) + 100} />
             </clipPath>
           ))}
         </defs>
@@ -72,6 +76,19 @@ export const S9Canopy: React.FC = () => {
               <ellipse key={i} cx={i * 92} cy={GROUND - 260 - random(`bg${i}`) * 120} rx={90} ry={70} />
             ))}
           </g>
+          <g filter="url(#s9-bleed)" opacity={interpolate(f, [10, 70], [0, 0.75], cl)}>
+            {new Array(30).fill(0).map((_, i) => {
+              const x = i * 66 + random(`mx${i}`) * 30;
+              const y = GROUND - 200 - random(`my${i}`) * 160;
+              return (
+                <g key={i}>
+                  <rect x={x - 7} y={y} width={14} height={GROUND - y} fill={C.inkWash} opacity={0.5} />
+                  <circle cx={x} cy={y} r={60 + random(`mr${i}`) * 30} fill="#A7B78F" opacity={0.7} />
+                  <circle cx={x + 30} cy={y + 20} r={44} fill="#9AAE84" opacity={0.7} />
+                </g>
+              );
+            })}
+          </g>
           {geo.map((g, i) => (
             <g key={i} clipPath={`url(#s9-grow-${i})`} filter="url(#s9-bleed)">
               <path d={g.trunk} fill={C.inkSoft} opacity={0.9} />
@@ -82,11 +99,9 @@ export const S9Canopy: React.FC = () => {
               {g.fronds ? <path d={g.fronds} fill="none" stroke={TONES[g.tone]} strokeWidth={9} strokeLinecap="round" /> : null}
             </g>
           ))}
-          {/* 巨树冠顶的金边：冲出林冠、迎光 */}
-          <g opacity={crown}>
-            {geo[3].puffs.slice(0, 9).map((p, k) => (
-              <circle key={k} cx={p.x} cy={p.y - 4} r={p.r} fill="none" stroke={C.goldLight} strokeWidth={4} strokeOpacity={0.75} />
-            ))}
+          {/* 巨树冠顶迎光：柔和金色高光 */}
+          <g opacity={crown} style={{mixBlendMode: 'screen'}}>
+            <ellipse cx={geo[3].x} cy={GROUND - geo[3].h - 10} rx={geo[3].w * 0.55} ry={70} fill="url(#s9-crownglow)" />
           </g>
           <rect x={-100} y={GROUND} width={W + 200} height={300} fill="url(#s9-floor)" />
           {/* 林下蕨类 */}
@@ -114,7 +129,7 @@ const grow = (f: number, g: {delay: number; speed: number}) =>
 
 const build = (t: Spec, i: number) => {
   const top = GROUND - t.h;
-  const tw = t.kind === 'buttress' ? 46 : t.kind === 'umbrella' ? 34 : t.kind === 'palm' ? 18 : 26;
+  const tw = t.kind === 'buttress' ? 56 : t.kind === 'umbrella' ? 42 : t.kind === 'palm' ? 22 : 32;
   // 树干（轻微弯曲）
   const bend = (random(`bd${i}`) - 0.5) * 50;
   let trunk = `M${t.x - tw / 2},${GROUND} C${t.x - tw / 2 + bend},${GROUND - t.h * 0.5} ${t.x - tw * 0.3 + bend},${top + 60} ${t.x - 6},${top + 30} L${t.x + 6},${top + 30} C${t.x + tw * 0.3 + bend},${top + 60} ${t.x + tw / 2 + bend},${GROUND - t.h * 0.5} ${t.x + tw / 2},${GROUND} Z`;
@@ -126,17 +141,21 @@ const build = (t: Spec, i: number) => {
   let extra = '';
   const cx = t.x + bend * 0.6;
   if (t.kind === 'umbrella') {
-    for (let k = 0; k < 14; k++) {
-      const a = (k / 13) * Math.PI;
-      puffs.push({x: cx + Math.cos(a) * t.w * 0.48, y: top + 40 - Math.sin(a) * 50, r: 52 + random(`u${k}`) * 22});
+    for (let k = 0; k < 16; k++) {
+      const a = (k / 15) * Math.PI;
+      puffs.push({x: cx + Math.cos(a) * t.w * 0.48, y: top + 60 - Math.sin(a) * 60, r: 56 + random(`u${k}`) * 24});
+    }
+    for (let k = 0; k < 9; k++) {
+      const a = (k / 8) * Math.PI;
+      puffs.push({x: cx + Math.cos(a) * t.w * 0.3, y: top + 20 - Math.sin(a) * 50, r: 60 + random(`u2${k}`) * 20});
     }
     extra = `M${cx},${top + 60} L${cx - t.w * 0.36},${top + 20} M${cx},${top + 60} L${cx + t.w * 0.36},${top + 20} M${cx},${top + 100} L${cx - t.w * 0.22},${top + 40}`;
   } else if (t.kind === 'round' || t.kind === 'buttress' || t.kind === 'vine') {
-    const n = t.kind === 'buttress' ? 12 : 9;
+    const n = t.kind === 'buttress' ? 18 : 14;
     for (let k = 0; k < n; k++) {
       const a = random(`ra${i}${k}`) * Math.PI * 2;
       const rr = random(`rr${i}${k}`) * t.w * 0.32;
-      puffs.push({x: cx + Math.cos(a) * rr, y: top + 70 + Math.sin(a) * rr * 0.7, r: 48 + random(`rs${i}${k}`) * 30});
+      puffs.push({x: cx + Math.cos(a) * rr, y: top + 80 + Math.sin(a) * rr * 0.7, r: 58 + random(`rs${i}${k}`) * 34});
     }
     if (t.kind === 'vine') {
       for (let k = 0; k < 3; k++) {
