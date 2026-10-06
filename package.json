@@ -1,0 +1,24 @@
+{
+  "name": "anxin-film",
+  "version": "1.0.0",
+  "private": true,
+  "description": "《一棵树的信》安信地板品牌史诗动画 — Remotion + SVG",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "fonts": "bash scripts/subset-fonts.sh",
+    "still": "remotion still src/index.ts",
+    "render": "remotion render src/index.ts Film out/film.mp4",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.533",
+    "@remotion/transitions": "4.0.533",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "4.0.533"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "typescript": "^5"
+  }
+}
