@@ -75,7 +75,7 @@ export const SceneRenderer: React.FC<{scene: Scene}> = ({scene}) => {
           <Sequence key={shot.id} from={start} durationInFrames={shot.dur * FPS} layout="none">
             {shot.year ? (
               <Sequence durationInFrames={shot.dur * FPS} layout="none">
-                <YearTag year={shot.year} note={shot.yearNote} tone={shot.subTone} />
+                <YearTag year={shot.year} note={shot.yearNote} tone={shot.subTone} variant={shot.line === 'A' ? 'earth' : undefined} />
               </Sequence>
             ) : null}
             {subWindows(shot).map((w, i) => (

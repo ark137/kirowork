@@ -119,6 +119,8 @@ export const S9Canopy: React.FC = () => {
           </g>
         </g>
       </svg>
+      {/* 字幕托底：底部宣纸色渐隐，保证树冠上字幕可读 */}
+      <AbsoluteFill style={{opacity: 1, background: 'linear-gradient(180deg, rgba(243,234,218,0) 72%, rgba(243,234,218,0.62) 86%, rgba(243,234,218,0.8) 100%)'}} />
       <GoldDust count={40} seed="s9d" opacity={light * 0.9} />
     </AbsoluteFill>
   );

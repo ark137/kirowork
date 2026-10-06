@@ -70,47 +70,47 @@ export const SHOTS: Shot[] = [
       {zh: '地板来自树木；信赖，要像树一样慢慢长成。', en: 'Floors come from trees. And trust, like a tree, takes time to grow.'},
     ]},
 
-  // ───────── 第三幕：雨林里的树 ─────────
-  {id: 8, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', year: '数千万年后', yearNote: 'AMAZONIA', scene: 'amazon',
-    brief: '大陆漂移，南美成形，水汽汇聚，雨林俯瞰，云雾升腾',
-    subs: [
-      {zh: '又过了很久很久，南美的雨水、阳光和河流，', en: 'Ages later, the rain, sun and rivers of South America'},
-      {zh: '养出了亚马逊，地球上最大的热带雨林。', en: 'raised the Amazon — the largest rainforest on Earth.'},
-    ]},
-  {id: 9, dur: 6, act: '第三幕 · 雨林里的树', line: 'A', scene: 'canopy',
-    brief: '同一片林子里，树为了争阳光，长成不同的模样',
-    subs: [{zh: '为了抢到一缕阳光，树长成了各自的样子。', en: 'Reaching for a ray of light, each tree grew into its own shape.'}]},
-
-  // ───────── 第四幕：断粮 ─────────
-  {id: 10, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'LOGGING BAN', scene: 'ban',
+  // ───────── 第三幕：断粮 ─────────
+  {id: 10, dur: 6, act: '第三幕 · 断粮', line: 'B', year: '1998', yearNote: 'LOGGING BAN', scene: 'ban',
     brief: '一纸公文盖下红章“禁止砍伐”，木材堆渐渐变空',
     subs: [
       {zh: '1998 年，一纸公文，国家禁止砍伐森林资源。', en: 'In 1998, a national decree banned the logging of forests.'},
       {zh: '原料的来路，被一刀斩断。', en: 'His supply of timber was cut off overnight.'},
     ]},
-  {id: 11, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', scene: 'chain',
+  {id: 11, dur: 6, act: '第三幕 · 断粮', line: 'B', year: '1998', scene: 'chain',
     brief: '一条木材供应链，中间被一只手掐住',
     subs: [{zh: '他想去巴西进口木材，可海外的货源，都攥在中间商手里。', en: 'He wanted to import from Brazil, but middlemen held every overseas source.'}]},
-  {id: 12, dur: 6, act: '第四幕 · 断粮', line: 'B', year: '1998', yearNote: 'THE DOCKS', scene: 'docks', subTone: 'light',
+  {id: 12, dur: 6, act: '第三幕 · 断粮', line: 'B', year: '1998', yearNote: 'THE DOCKS', scene: 'docks', subTone: 'light',
     brief: '码头货柜，混在搬运工里的身影翻看包装箱，手电光',
     subs: [{zh: '他混在搬运工中间，一箱一箱地看包装，找一个线索。', en: 'Among the dockworkers, he searched crate after crate for a single clue.'}]},
 
-  // ───────── 第五幕：一纸传真 ─────────
-  {id: 13, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998.7', scene: 'tape',
+  // ───────── 第四幕：一纸传真 ─────────
+  {id: 13, dur: 6, act: '第四幕 · 一纸传真', line: 'B', year: '1998.7', scene: 'tape',
     brief: '特写：一卷封箱胶带，印着电话和传真号码',
     subs: [{zh: '1998 年 7 月，他在一卷封箱胶带上，找到了一个巴西供应商的电话。', en: 'In July 1998, on a roll of packing tape, he found a Brazilian supplier’s number.'}]},
-  {id: 14, dur: 7, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 'clocks',
+  {id: 14, dur: 7, act: '第四幕 · 一纸传真', line: 'B', year: '1998', scene: 'clocks',
     brief: '温州与巴西两个钟面，相差 11 小时；电话不停拨出',
     subs: [
       {zh: '他不懂葡萄牙语，对方不懂中文。', en: 'He spoke no Portuguese; they spoke no Chinese.'},
       {zh: '隔着 11 个小时的时差，他一直拨。', en: 'Across an 11-hour time difference, he kept dialing.'},
     ]},
-  {id: 15, dur: 6, act: '第五幕 · 一纸传真', line: 'B', year: '1998', scene: 'fax', subTone: 'light',
+  {id: 15, dur: 6, act: '第四幕 · 一纸传真', line: 'B', year: '1998', scene: 'fax', subTone: 'light',
     brief: '传真纸一张张飞出，没有回音；夜里，传真机忽然亮了',
     subs: [
       {zh: '一个多月后，传真机响了。', en: 'More than a month later, the fax machine rang.'},
       {zh: '巴西供应商路易斯，寄来了报价单。', en: 'Luis, a Brazilian supplier, had sent a quote.'},
     ]},
+
+  // ───────── 第五幕：雨林里的树（承接传真：报价单来自南美） ─────────
+  {id: 8, dur: 7, act: '第五幕 · 雨林里的树', line: 'A', year: '数千万年前', yearNote: 'AMAZONIA', scene: 'amazon',
+    brief: '大陆漂移，南美成形，水汽汇聚，雨林俯瞰，云雾升腾',
+    subs: [
+      {zh: '报价单来自的地方，是南美。', en: 'The quote came from South America.'},
+      {zh: '在那里，数千万年的雨水、阳光和河流，养出了地球上最大的热带雨林：亚马逊。', en: 'There, tens of millions of years of rain, sun and rivers had raised the largest rainforest on Earth: the Amazon.'},
+    ]},
+  {id: 9, dur: 6, act: '第五幕 · 雨林里的树', line: 'A', scene: 'canopy',
+    brief: '同一片林子里，树为了争阳光，长成不同的模样',
+    subs: [{zh: '为了抢到一缕阳光，树长成了各自的样子。', en: 'Reaching for a ray of light, each tree grew into its own shape.'}]},
 
   // ───────── 第六幕：相遇 ─────────
   {id: 16, dur: 8, act: '第六幕 · 相遇', line: 'AB', year: '1999', yearNote: 'AMAZONIA', scene: 'meet',

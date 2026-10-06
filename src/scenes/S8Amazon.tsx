@@ -7,7 +7,8 @@ import {GoldDust} from '../components/GoldDust';
 import {smoothNoise} from '../lib/geom';
 
 /**
- * 第 8 镜（6 秒 / 180 帧）：数千万年后，亚马逊
+ * 雨林镜 amazon（7 秒 / 210 帧，内部按 180 帧编排后等比拉伸）：数千万年前，亚马逊
+ * 承接传真：报价单来自南美
  * A  0–96   水墨地图：南美与非洲从相拥处缓缓漂开，海洋墨晕铺开；亚马逊河自西向东描出，绿意沿流域洇开
  * B 84–180  推入流域 → 雨林俯瞰：层层树冠、蜿蜒河流、云雾升腾、鸟群掠过
  */
@@ -35,7 +36,7 @@ const blob = (pts: number[][], seed: string) => {
 };
 
 export const S8Amazon: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = (useCurrentFrame() * 180) / 210;
   const io = Easing.inOut(Easing.cubic);
 
   // ── A：地图 ──
@@ -186,6 +187,8 @@ export const S8Amazon: React.FC = () => {
           </g>
         </svg>
       </AbsoluteFill>
+      {/* 字幕托底：底部宣纸色渐隐，保证树冠上字幕可读 */}
+      <AbsoluteFill style={{opacity: forestIn, background: 'linear-gradient(180deg, rgba(243,234,218,0) 72%, rgba(243,234,218,0.62) 86%, rgba(243,234,218,0.8) 100%)'}} />
       <GoldDust count={26} seed="s8d" opacity={0.5} />
     </AbsoluteFill>
   );
