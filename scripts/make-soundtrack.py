@@ -9,6 +9,11 @@
 
 时间轴：从 src/timeline.ts 解析每个场景的起始帧，提示点（cue）以“场景内帧号”书写，
 与各场景组件里的动画节点一一对应。
+
+用法：
+  python3 scripts/make-soundtrack.py                 全片音效轨
+  python3 scripts/make-soundtrack.py --clip mill     只导出某一镜的音效 → out/<scene>-sfx.wav
+      （响度增益取自“不含该镜”的全片混音，即与已出成片的音量一致；可单独剪进原片）
 """
 import os, re, subprocess, json, math, urllib.request, zipfile
 import numpy as np
@@ -22,12 +27,14 @@ SRC = os.path.join(ROOT, '.sfx-src')
 rng = np.random.default_rng(7)
 
 # ───────────────────────── 时间轴 ─────────────────────────
-def scene_starts():
+def scene_starts(exclude=()):
     txt = open(os.path.join(ROOT, 'src/timeline.ts'), encoding='utf-8').read()
     body = txt[txt.index('export const SHOTS'):txt.index('export type Scene')]
     shots = re.findall(r"\{id: [\d.]+,.*?dur: ([\d.]+),.*?scene: '(\w+)'", body, re.S)
     starts, order, cur = {}, [], 0
     for dur, sc in shots:
+        if sc in exclude:
+            continue
         fr = int(round(float(dur) * FPS))
         if not order or order[-1][0] != sc:
             order.append([sc, cur, 0])
@@ -36,9 +43,13 @@ def scene_starts():
         cur += fr
     return starts, order, cur
 
-STARTS, ORDER, TOTAL = scene_starts()
-N = int(TOTAL / FPS * SR) + SR  # 尾部多留 1 秒
-mix = np.zeros((N, 2), dtype=np.float64)
+def setup(exclude=()):
+    global STARTS, ORDER, TOTAL, N, mix
+    STARTS, ORDER, TOTAL = scene_starts(exclude)
+    N = int(TOTAL / FPS * SR) + SR  # 尾部多留 1 秒
+    mix = np.zeros((N, 2), dtype=np.float64)
+
+setup()
 
 def at(scene, frame):
     return (STARTS[scene] + frame) / FPS
@@ -558,6 +569,9 @@ def build():
         kenney('handleSmallLeather', at('nameplates', 4 + i * 13 + 2), -30, pan=-0.5 + i * 0.33)
     place(s_shimmer(1.6, 20, seed=19), at('nameplates', 94), -23)
 
+    if 'mill' in STARTS:
+        mill_cues()
+
     # 卫星轮伐
     bed('satellite', lambda d: s_wind(d, 400, 2400, 0.05) * 0.6 + 0.4 * s_room(d, 140)[: int(d * SR)], -26)
     place(s_whoosh(3.2, 2600, 400), at('satellite', 0), -24, pan=0.4)
@@ -666,17 +680,56 @@ def build():
     place(s_shimmer(3.0, 22, seed=32), at('s27', 178), -20)
 
 
-def master():
-    global mix
-    # 轻微高通去直流、软限幅、整体响度
-    for ch in range(2):
-        mix[:, ch] = hp(mix[:, ch], 25)
-    rms = np.sqrt((mix ** 2).mean())
-    target = db(-19)  # 音效轨整体偏安静，留给画面
-    mix *= target / (rms + 1e-9)
-    # 前视限幅：5 ms 前视取峰值包络，120 ms 释放，天花板 -1 dBFS
+def mill_cues(edge_in=0.4, edge_out=0.6):
+    """巴西 · 雨林边的原材料工厂（scene: mill，240 帧）。随机数用局部 rng，不影响其他镜头。"""
+    r = np.random.default_rng(1999)
+    bed('mill', lambda d: s_forest(d, birds=0.8, insects=0.5, seed=40) * 0.65 + 0.35 * s_water(d, 0.3)[: int(d * SR)], -21,
+        extra_in=edge_in, extra_out=edge_out)
+    # A：河岸 · 厂房立起 · 握手
+    place(s_horn(1.8, 110), at('mill', 4), -33, pan=0.7)
+    place(s_water(1.6, 1.0), at('mill', 6), -30, pan=0.6)
+    for k, fr in enumerate([0, 7, 14, 21]):
+        kenney('footstep_grass_00%d' % (k % 5), at('mill', fr), -27, pan=-0.55 if k % 2 == 0 else -0.25)
+    for i in range(6):
+        kenney('impactPlank_medium_00%d' % (i % 5), at('mill', 6 + i * 8 + 16), -22, pan=-0.1 + i * 0.1, wet=0.25)
+    for k in range(6):
+        kenney('impactWood_light_00%d' % (k % 5), at('mill', 30 + k * 9), -31, pan=0.25, rate=1.2)
+    stacks = [(4, 0), (3, 1), (2, 2)]
+    for rows, si in stacks:
+        n = 0
+        for row in range(rows):
+            for _ in range(rows - row):
+                kenney('impactWood_light_00%d' % (n % 5), at('mill', 16 + si * 12 + n * 2.2 + 6), -33 + r.uniform(-2, 1), pan=-0.35 + si * 0.08, rate=r.uniform(0.8, 0.95))
+                n += 1
+    kenney('impactWood_medium_001', at('mill', 30), -28, pan=0.5)
+    kenney('impactWood_medium_003', at('mill', 40), -30, pan=0.55)
+    place(lp(s_motor(2.2), 1400), at('mill', 44), -38, pan=0.1)
+    kenney('cloth2', at('mill', 20), -26, pan=-0.45)
+    kenney('cloth3', at('mill', 38), -28, pan=-0.45)
+    place(s_chime(587.3, 4, 0.1, seed=41), at('mill', 44), -22, pan=-0.4)
+    place(s_shimmer(1.6, 20, seed=42), at('mill', 48), -27, pan=-0.4)
+    place(s_whoosh(1.2, 200, 1400), at('mill', 80), -26)
+    # B：规划图展开、落笔 → 推入图纸，化作林地
+    kenney('bookOpen', at('mill', 92), -22)
+    place(s_rustle(0.9), at('mill', 93), -24)
+    kenney('bookPlace1', at('mill', 116), -30)
+    for k in range(6):
+        kenney('scratch_00%d' % (k % 5 + 1), at('mill', 104 + k * 6), -26, pan=r.uniform(-0.3, 0.3))
+    place(s_whoosh(1.4, 250, 2000), at('mill', 132), -23)
+    place(s_swell(2.4, 58), at('mill', 134), -24)
+    # C：升起、拉直成金色网格 → 交给卫星
+    place(s_whoosh(1.6, 300, 2400), at('mill', 166), -24)
+    place(s_shimmer(1.8, 22, seed=43), at('mill', 186), -23)
+    place(s_bell(1318.5, 2.0), at('mill', 196), -25)
+    place(s_chime(1046.5, 4, 0.07, seed=44), at('mill', 204), -24, pan=0.3)
+    for fr in [226, 233]:
+        place(s_blip(1800, 0.05), at('mill', fr), -28, pan=0.4)
+
+
+def limiter(x):
+    """前视限幅：5 ms 前视取峰值包络，120 ms 释放，天花板 -1 dBFS"""
     ceil = db(-1)
-    a = np.abs(mix).max(1)
+    a = np.abs(x).max(1)
     look = int(0.005 * SR)
     from scipy.ndimage import maximum_filter1d
     env = maximum_filter1d(a, size=2 * look + 1)
@@ -685,7 +738,44 @@ def master():
     gs = g.copy()
     for i in range(1, len(gs)):  # 只在需要时逐点平滑（下降立即、回升缓慢）
         gs[i] = min(g[i], gs[i - 1] * rel + (1 - rel) * g[i]) if g[i] > gs[i - 1] else g[i]
-    mix *= gs[:, None]
+    return x * gs[:, None]
+
+
+def master_gain():
+    """高通去直流后，按全片 RMS 求出整体增益（音效轨整体偏安静，留给画面）"""
+    for ch in range(2):
+        mix[:, ch] = hp(mix[:, ch], 25)
+    rms = np.sqrt((mix ** 2).mean())
+    return db(-19) / (rms + 1e-9)
+
+
+def export_clip(scene):
+    """单镜音效：增益取自不含该镜的全片（= 已出成片的响度），再单独混这一镜"""
+    global mix
+    setup(exclude=(scene,))
+    build()
+    gain = master_gain()
+    setup()
+    sc = [o for o in ORDER if o[0] == scene][0]
+    {'mill': lambda: mill_cues(edge_in=1.2, edge_out=1.2)}[scene]()
+    for ch in range(2):
+        mix[:, ch] = hp(mix[:, ch], 25)
+    a, b = int(sc[1] / FPS * SR), int((sc[1] + sc[2]) / FPS * SR)
+    x = limiter(mix[a:b] * gain)
+    e = int(0.08 * SR)
+    x[:e] *= np.linspace(0, 1, e)[:, None]
+    x[-e:] *= np.linspace(1, 0, e)[:, None]
+    out = os.path.join(ROOT, 'out', f'{scene}-sfx.wav')
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    wavfile.write(out, SR, (x * 32767).astype(np.int16))
+    print(json.dumps({'scene': scene, 'frames': sc[2], 'seconds': sc[2] / FPS, 'gain_db': 20 * math.log10(gain), 'wav': out}))
+
+
+def master():
+    global mix
+    # 轻微高通去直流、整体响度、软限幅
+    mix *= master_gain()
+    mix = limiter(mix)
     # 片尾淡出（最后 1.2 秒）
     end = int(TOTAL / FPS * SR)
     fo = int(1.2 * SR)
@@ -694,7 +784,11 @@ def master():
 
 
 if __name__ == '__main__':
+    import sys
     ensure_packs()
+    if '--clip' in sys.argv:
+        export_clip(sys.argv[sys.argv.index('--clip') + 1])
+        sys.exit(0)
     build()
     master()
     os.makedirs(os.path.join(ROOT, 'out'), exist_ok=True)

@@ -13,26 +13,28 @@ import {GoldDust} from '../components/GoldDust';
  * 240–270  第 25 年：第 1 块已重新成林，轮回盘闭合，金色箭头回到起点
  */
 const cl = {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'} as const;
-const N = 5;
-const CELL_W = 164;
-const CELL_H = 124;
-const GX = 380;
-const GY = 196;
-const GW = CELL_W * N;
-const GH = CELL_H * N;
+export const N = 5;
+export const CELL_W = 164;
+export const CELL_H = 124;
+export const GX = 380;
+export const GY = 196;
+export const GW = CELL_W * N;
+export const GH = CELL_H * N;
 const WHEEL = {x: 1540, y: 470, r: 150};
 const Y0 = 84; // 第 1 年开始
 const Y1 = 236; // 第 25 年结束
 const YEARS = 25;
 
 /** 蛇形顺序：第 k 年采伐的格子 */
-const ORDER = new Array(N * N).fill(0).map((_, k) => {
+export const ORDER = new Array(N * N).fill(0).map((_, k) => {
   const r = Math.floor(k / N);
   const c = r % 2 === 0 ? k % N : N - 1 - (k % N);
   return {r, c};
 });
 
-const GREENS = ['#5E7F55', '#6F8F62', '#4F7048', '#7E9B6A'];
+export const GREENS = ['#5E7F55', '#6F8F62', '#4F7048', '#7E9B6A'];
+/** 河流（mill 镜头末帧与此对齐） */
+export const SAT_RIVER = 'M-40,880 C300,820 420,960 760,900 C1080,840 1240,980 1960,900';
 
 export const SSatellite: React.FC = () => {
   const f = useCurrentFrame();
@@ -78,7 +80,7 @@ export const SSatellite: React.FC = () => {
           ))}
         </g>
         {/* 河流 */}
-        <path d="M-40,880 C300,820 420,960 760,900 C1080,840 1240,980 1960,900" fill="none" stroke="#EFE4C4" strokeWidth={44} opacity={0.9} />
+        <path d={SAT_RIVER} fill="none" stroke="#EFE4C4" strokeWidth={44} opacity={0.9} />
 
         {/* 林区底 */}
         <rect x={GX - 10} y={GY - 10} width={GW + 20} height={GH + 20} fill="#F1E8D2" opacity={0.6} rx={6} />
@@ -258,7 +260,7 @@ const mix = (a: string, b: string, t: number) => {
   return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(',')})`;
 };
 
-const buildCells = () =>
+export const buildCells = () =>
   ORDER.map(({r, c}, k) => {
     const crowns: {x: number; y: number; r: number}[] = [];
     const x0 = GX + c * CELL_W;
@@ -273,7 +275,7 @@ const buildCells = () =>
     return {r, c, k, crowns};
   });
 
-const buildBackground = () =>
+export const buildBackground = () =>
   new Array(170).fill(0).map((_, i) => ({
     x: random(`bx${i}`) * (W + 100) - 50,
     y: random(`by${i}`) * (H + 100) - 50,

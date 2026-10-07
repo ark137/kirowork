@@ -24,6 +24,7 @@ import {S14Clocks} from './scenes/S14Clocks';
 import {S15Fax} from './scenes/S15Fax';
 import {SMeet} from './scenes/SMeet';
 import {SNameplates} from './scenes/SNameplates';
+import {SMill} from './scenes/SMill';
 import {SSatellite} from './scenes/SSatellite';
 import {S20World} from './scenes/S20World';
 import {S21Landmarks} from './scenes/S21Landmarks';
@@ -55,6 +56,7 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   fax: S15Fax,
   meet: SMeet,
   nameplates: SNameplates,
+  mill: SMill,
   satellite: SSatellite,
   s20: S20World,
   s21: S21Landmarks,

@@ -119,6 +119,12 @@ export const SHOTS: Shot[] = [
   {id: 17, dur: 5, act: '第六幕 · 相遇', line: 'AB', year: '1999', scene: 'nameplates',
     brief: '四张树种名牌：Ipe 重蚁木、Cumaru 二翅豆、Garapa 铁苏木、Balsamo 香脂木豆',
     subs: [{zh: '他在雨林里，找到了最适合的木头。', en: 'In the rainforest, he found the perfect wood.'}]},
+  {id: 17.5, label: '17+', dur: 8, act: '第六幕 · 相遇', line: 'B', year: '1999', yearNote: 'BRAZIL', scene: 'mill',
+    brief: '雨林边、河岸旁，木结构原材料工厂一跨跨立起（原木堆场、小码头、驳船），前景他（及肩长发）与路易斯（草帽）握手 → 规划图在桌上展开，采伐道、河岸保护林、育苗区延伸进真实林地 → 镜头升到俯视，规划线化作金色网格，接卫星扫描',
+    subs: [
+      {zh: '他和巴西供应商路易斯一起，在雨林边建起了原材料工厂。', en: 'Together with Luis, his Brazilian supplier, he built a raw-material mill at the edge of the rainforest.'},
+      {zh: '先规划，后采伐；只取森林给得起的那一份。', en: 'Plan first, harvest second — take only what the forest can give.'},
+    ]},
   {id: 18, dur: 9, act: '第六幕 · 相遇', line: 'B', year: '1999 起', yearNote: 'SATELLITE ROTATION', scene: 'satellite',
     brief: '卫星遥感视角，林区分成 25 块，一块采伐，一块重新种上',
     subs: [
