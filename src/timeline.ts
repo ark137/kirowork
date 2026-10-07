@@ -9,7 +9,8 @@ export type Shot = {
   /** 秒 */
   dur: number;
   act: string;
-  line: 'A' | 'B' | 'AB' | '—';
+  /** A=木线（地球时间） B=人线 H=人与木（人类历史时间） */
+  line: 'A' | 'B' | 'AB' | 'H' | '—';
   /** 左上角年份标签 */
   year?: string;
   yearNote?: string;
@@ -41,6 +42,29 @@ export const SHOTS: Shot[] = [
   {id: 3, dur: 6, act: '第一幕 · 木的诞生', line: 'A', year: '约 3.85 亿年前', yearNote: 'FIRST FORESTS', scene: 's3',
     brief: '第一片森林，第一批真正站直的树，光线穿过树冠',
     subs: [{zh: '于是，地球有了第一片森林。', en: 'And so, the Earth grew its first forest.'}]},
+
+  // ───────── 第一幕（续）：人与木 ─────────
+  {id: 3.1, label: 'H1', dur: 5, act: '第一幕 · 人与木', line: 'H', year: '数十万年前', yearNote: 'FIRE', scene: 'fire',
+    brief: '林边暮色，一截枯枝落进石圈，火苗腾起；围坐的人影被映亮，火光在树干上摇曳；推近火心，火星里浮出一圈年轮',
+    subs: [{zh: '人类最早的温暖，来自一根木头。', en: 'Humanity\'s first warmth came from a piece of wood.'}]},
+  {id: 3.2, label: 'H2', dur: 5, act: '第一幕 · 人与木', line: 'H', year: '约 8000 年前', yearNote: 'KUAHUQIAO · ZHEJIANG', scene: 'canoe',
+    brief: '湖边一根原木，石锛敲击、火烧掏空，木屑飞起；原木化作独木舟滑入水面，涟漪如年轮',
+    subs: [{zh: '八千年前，浙江的先民把一根原木，凿成了一条船。', en: 'Eight thousand years ago, people in Zhejiang carved a single log into a boat.'}]},
+  {id: 3.3, label: 'H3', dur: 7, act: '第一幕 · 人与木', line: 'H', year: '约 7000 年前', yearNote: 'HEMUDU · ZHEJIANG', scene: 'mortise',
+    brief: '特写：榫头插进卯眼“咔”地合上，木纹描出金线；拉开：水边干栏式木屋一根根立起，架高的地板离开潮湿的地面',
+    subs: [
+      {zh: '七千年前，河姆渡人发明了榫卯。', en: 'Seven thousand years ago, the people of Hemudu invented the mortise and tenon.'},
+      {zh: '不靠钉子，木头与木头彼此咬合。', en: 'No nails — just wood holding wood.'},
+    ]},
+  {id: 3.4, label: 'H4', dur: 7, act: '第一幕 · 人与木', line: 'H', year: '1420', yearNote: 'THE FORBIDDEN CITY', scene: 'palace',
+    brief: '斗拱一层层叠起（与 Logo 堆叠同一动作）；镜头后拉：红柱金顶的大殿，再拉开是层层宫殿屋顶',
+    subs: [
+      {zh: '六百多年前，紫禁城用一层层斗拱，托起了宫殿的屋檐。', en: 'Over six centuries ago, the Forbidden City raised its eaves on layer upon layer of wooden brackets.'},
+      {zh: '木头柔韧、温暖，也让人安心。', en: 'Wood bends without breaking — warm, and reassuring.'},
+    ]},
+  {id: 3.5, label: 'H5', dur: 5, act: '第一幕 · 人与木', line: 'H', scene: 'home',
+    brief: '江南雨夜，青瓦木屋，木格窗透出暖光；推进窗里：一家人吃饭，孩子赤脚跑过木地板；暖光化开，接 1966 温州老街',
+    subs: [{zh: '一代又一代人，住在木头里，被木头温暖着。', en: 'Generation after generation, people lived within wood, warmed by it.'}]},
 
   // ───────── 第二幕：人的起点 ─────────
   {id: 4, dur: 5, act: '第二幕 · 人的起点', line: 'B', year: '1966', yearNote: 'WENZHOU', scene: 's4',

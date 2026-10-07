@@ -14,6 +14,8 @@
   python3 scripts/make-soundtrack.py                 全片音效轨
   python3 scripts/make-soundtrack.py --clip mill     只导出某一镜的音效 → out/<scene>-sfx.wav
       （响度增益取自“不含该镜”的全片混音，即与已出成片的音量一致；可单独剪进原片）
+  python3 scripts/make-soundtrack.py --range fire home
+      导出连续多镜（含两端与原片的 14 帧交叉淡化）→ out/fire-home-sfx.wav
 """
 import os, re, subprocess, json, math, urllib.request, zipfile
 import numpy as np
@@ -44,7 +46,10 @@ def scene_starts(exclude=()):
     return starts, order, cur
 
 def setup(exclude=()):
-    global STARTS, ORDER, TOTAL, N, mix
+    """每次重建混音都从同一随机状态开始（与单次运行的成片逐样本一致）"""
+    global STARTS, ORDER, TOTAL, N, mix, rng, _ir
+    rng = np.random.default_rng(7)
+    _ir = None
     STARTS, ORDER, TOTAL = scene_starts(exclude)
     N = int(TOTAL / FPS * SR) + SR  # 尾部多留 1 秒
     mix = np.zeros((N, 2), dtype=np.float64)
@@ -429,6 +434,9 @@ def build():
     place(s_swell(3.5, 65), at('s3', 20), -20)
     place(s_shimmer(2.0, 16, seed=4), at('s3', 70), -26)
 
+    if 'fire' in STARTS and not SKIP.get('human'):
+        isolated(human_cues, 3000)
+
     # 第 4 镜：1966 温州水街
     bed('s4', lambda d: s_water(d, 0.3) * 0.7 + 0.3 * s_forest(d, birds=0.6, insects=0, seed=4)[: int(d * SR)], -22)
     kenney('creak2', at('s4', 40), -28, pan=-0.3, rate=0.9, wet=0.3)
@@ -680,6 +688,114 @@ def build():
     place(s_shimmer(3.0, 22, seed=32), at('s27', 178), -20)
 
 
+SKIP = {}
+
+
+def isolated(fn, seed):
+    """用独立随机源执行 fn：插入新镜头不改变其后各镜的噪声纹理与混响（与原片逐样本一致）"""
+    global rng, _ir
+    saved = (rng, _ir)
+    rng = np.random.default_rng(seed)
+    try:
+        fn()
+    finally:
+        rng, _ir = saved
+
+
+def s_crackle(sec, density=14):
+    """柴火噼啪"""
+    n = int(sec * SR)
+    y = 0.15 * lp(pink(sec), 500)[:n]
+    k = 0.0
+    while k < sec - 0.05:
+        i = int(k * SR)
+        c = hp(noise(0.012), 1800) * env_ad(int(0.012 * SR), 0.0005, 0.012, 6) * rng.uniform(0.2, 1)
+        y[i:i + len(c)] += c[: n - i]
+        k += rng.exponential(1 / density)
+    return fade(y / (np.abs(y).max() + 1e-9), 0.3, 0.4)
+
+def s_splash(dur=0.9):
+    x = bp(noise(dur), 400, 5000) * env_ad(int(dur * SR), 0.01, dur, 4)
+    return reverb(x / (np.abs(x).max() + 1e-9), 0.3, 1.2)
+
+def s_rain(sec):
+    x = hp(noise(sec), 1200) * 0.5 + 0.5 * bp(pink(sec), 300, 2500)[: int(sec * SR)]
+    n = len(x)
+    k = 0.0
+    while k < sec - 0.05:
+        i = int(k * SR)
+        d = s_blip(rng.uniform(2500, 4500), 0.03) * rng.uniform(0.1, 0.4)
+        x[i:i + len(d)] += d[: n - i]
+        k += rng.exponential(1 / 30)
+    return fade(x / (np.abs(x).max() + 1e-9), 0.4, 0.4)
+
+
+def human_cues():
+    """人与木：fire / canoe / mortise / palace / home（场景内帧号与各组件动画节点对应）"""
+    # H1 火
+    bed('fire', lambda d: s_wind(d, 150, 800, 0.06) * 0.6 + 0.4 * s_forest(d, birds=0.3, insects=0.3, seed=301)[: int(d * SR)], -25)
+    place(s_whoosh(0.7, 1800, 300), at('fire', 30), -28, pan=-0.3)
+    kenney('impactWood_medium_002', at('fire', 42), -20, wet=0.25)
+    place(s_whoosh(1.0, 200, 1600), at('fire', 44), -24)
+    place(s_crackle(3.8), at('fire', 48), -22)
+    place(s_swell(3.0, 55), at('fire', 60), -24)
+    place(s_shimmer(2.0, 22, seed=302), at('fire', 112), -23)
+    place(s_bell(784, 3.0), at('fire', 118), -25)
+    # H2 舟
+    bed('canoe', lambda d: s_water(d, 0.3) * 0.6 + 0.4 * s_forest(d, birds=0.6, insects=0.0, seed=303)[: int(d * SR)], -23)
+    place(s_crackle(1.8, 8), at('canoe', 12), -30, pan=-0.3)
+    for k, fr in enumerate([16, 28, 40, 52, 64, 76]):
+        kenney('impactWood_medium_00%d' % (k % 5), at('canoe', fr), -17, pan=0.25, wet=0.2)
+        kenney('scratch_00%d' % (k % 5 + 1), at('canoe', fr + 2), -32, pan=0.2, rate=1.3)
+    place(s_rustle(1.2), at('canoe', 82), -28)
+    place(s_splash(1.0), at('canoe', 100), -20, pan=0.2)
+    place(s_water(1.6, 1.4), at('canoe', 102), -27, pan=0.2)
+    place(s_bell(1046.5, 2.2), at('canoe', 108), -27, pan=0.2)
+    for fr in [122, 146]:
+        place(lp(s_splash(0.5), 1800), at('canoe', fr), -31, pan=0.35)
+    # H3 榫卯
+    bed('mortise', lambda d: s_room(d, 260) * 0.5 + 0.5 * s_forest(d, birds=0.5, insects=0.2, seed=305)[: int(d * SR)], -26)
+    place(lp(s_rustle(1.6), 2500), at('mortise', 8), -28, pan=-0.4)
+    kenney('impactWood_heavy_001', at('mortise', 58), -14, wet=0.25)
+    kenney('impactPlank_medium_002', at('mortise', 58), -20)
+    place(s_shimmer(1.4, 22, seed=306), at('mortise', 62), -24)
+    place(s_whoosh(1.2, 300, 1800), at('mortise', 88), -26)
+    for h in range(3):
+        for k in range(6):
+            kenney('impactPlank_medium_00%d' % ((h + k) % 5), at('mortise', 100 + h * 8 + k * 3 + 14), -30, pan=-0.5 + h * 0.5, rate=1.15)
+    for h in range(3):
+        kenney('impactWood_medium_00%d' % (h + 1), at('mortise', 136 + h * 6 + 10), -24, pan=-0.5 + h * 0.5)
+    place(s_chime(659.3, 4, 0.09, seed=307), at('mortise', 148), -22)
+    place(s_rustle(1.4), at('mortise', 166), -28)
+    for k in range(5):
+        kenney('impactWood_light_00%d' % k, at('mortise', 180 + k * 7), -30, pan=0.3, rate=1.3)
+    # H4 故宫
+    bed('palace', lambda d: s_wind(d, 200, 1100, 0.05) * 0.6 + 0.4 * s_room(d, 300)[: int(d * SR)], -27)
+    for i in range(15):
+        kenney('impactWood_light_00%d' % (i % 5), at('palace', 6 + i * 4.6 + 6), -24 + (i % 3), pan=(i % 5 - 2) * 0.1, rate=1.1 + (i % 4) * 0.08)
+    kenney('impactWood_heavy_002', at('palace', 6 + 14 * 4.6 + 8), -20, wet=0.3)
+    place(s_whoosh(2.2, 2400, 300), at('palace', 92), -25)
+    place(s_swell(3.0, 49), at('palace', 112), -22)
+    place(s_bell(392, 4.0, ((1, 1), (2.0, 0.4), (3.0, 0.2), (4.2, 0.1))), at('palace', 150), -18)
+    place(s_shimmer(2.0, 20, seed=308), at('palace', 166), -24)
+    for k in range(3):
+        place(s_bird(309 + k) * 0.5, at('palace', 158 + k * 12), -28, pan=0.4 - k * 0.3)
+    # H5 木屋里的家（雨声在穿窗入室时收住）
+    sc = [o for o in ORDER if o[0] == 'home'][0]
+    rain = s_rain(4.2)
+    rain[-int(1.1 * SR):] *= np.linspace(1, 0, int(1.1 * SR)) ** 2
+    place(rain, sc[1] / FPS - 0.4, -21, width=0.6)
+    place(lp(s_water(3.0, 0.8), 1500), at('home', 0), -30, pan=-0.3)
+    bed('home', lambda d: s_room(d, 320), -28)
+    place(s_whoosh(1.4, 400, 2000), at('home', 60), -27)
+    kenney('glass_002', at('home', 102), -30, pan=-0.1)
+    kenney('glass_004', at('home', 114), -32, pan=0.15)
+    for k in range(9):
+        kenney('impactWood_light_00%d' % (k % 5), at('home', 94 + k * 6.2), -32, pan=-0.6 + k * 0.15, rate=1.6)
+    place(s_swell(2.4, 62), at('home', 118), -27)
+    place(s_shimmer(1.8, 18, seed=310), at('home', 126), -25)
+
+
 def mill_cues(edge_in=0.4, edge_out=0.6):
     """巴西 · 雨林边的原材料工厂（scene: mill，240 帧）。随机数用局部 rng，不影响其他镜头。"""
     r = np.random.default_rng(1999)
@@ -783,9 +899,48 @@ def master():
     mix = mix[:end]
 
 
+def export_range(first, last, tail=14):
+    """连续多镜：[first 起点, last 之后一镜起点 + tail 帧)，与 Film 的交叉淡化对齐，首尾与原片逐帧衔接"""
+    global mix
+    names = [o[0] for o in ORDER]
+    seg = names[names.index(first): names.index(last) + 1]
+    setup(exclude=tuple(seg) + ('mill',))
+    build()
+    gain = master_gain()  # = 原片（不含这几镜、不含 mill）的整体增益
+    # 新镜头自己的声音 = 含新镜头的混音 − 不含新镜头的混音（随机源已隔离，其余部分逐样本相同）
+    setup(exclude=('mill',))
+    SKIP['human'] = True
+    build()
+    base = mix.copy()
+    setup(exclude=('mill',))
+    SKIP['human'] = False
+    build()
+    new = mix - base
+    nxt = names[names.index(last) + 1]
+    a = int(STARTS[first] / FPS * SR)
+    b = int((STARTS[nxt] + tail) / FPS * SR)
+    # 两端各 0.5 秒只淡化新镜头自己的声音：片段首尾回到原片本身的声音，剪接处无跳变
+    env = np.ones(b - a)
+    k = int(0.5 * SR)
+    env[:k] = np.sin(np.linspace(0, np.pi / 2, k)) ** 2
+    env[-k:] = np.cos(np.linspace(0, np.pi / 2, k)) ** 2
+    x = base[a:b] + new[a:b] * env[:, None]
+    for ch in range(2):
+        x[:, ch] = hp(x[:, ch], 25)
+    x = limiter(x * gain)
+    out = os.path.join(ROOT, 'out', f'{first}-{last}-sfx.wav')
+    wavfile.write(out, SR, (x * 32767).astype(np.int16))
+    print(json.dumps({'from': first, 'to': last, 'start_frame': STARTS[first], 'end_frame': STARTS[nxt] + tail,
+                      'seconds': (b - a) / SR, 'gain_db': 20 * math.log10(gain), 'wav': out}))
+
+
 if __name__ == '__main__':
     import sys
     ensure_packs()
+    if '--range' in sys.argv:
+        i = sys.argv.index('--range')
+        export_range(sys.argv[i + 1], sys.argv[i + 2])
+        sys.exit(0)
     if '--clip' in sys.argv:
         export_clip(sys.argv[sys.argv.index('--clip') + 1])
         sys.exit(0)

@@ -20,7 +20,7 @@ const RingIcon: React.FC<{p: number}> = ({p}) => (
  * 左上角年份标签：金线生长 + 文字擦出
  * variant='earth'：木线（地质时间）——墨色字 + 年轮小图标 + “EARTH TIME” 前缀，与人线的金色年份区分
  */
-export const YearTag: React.FC<{year: string; note?: string; tone?: 'ink' | 'light'; variant?: 'earth'}> = ({
+export const YearTag: React.FC<{year: string; note?: string; tone?: 'ink' | 'light'; variant?: 'earth' | 'history'}> = ({
   year,
   note,
   tone = 'ink',
@@ -38,14 +38,15 @@ export const YearTag: React.FC<{year: string; note?: string; tone?: 'ink' | 'lig
   });
   const light = tone === 'light';
   const earth = variant === 'earth';
-  const noteText = earth ? `EARTH TIME${note ? ` · ${note}` : ''}` : note;
+  const history = variant === 'history';
+  const noteText = earth ? `EARTH TIME${note ? ` · ${note}` : ''}` : history ? `HUMAN TIME${note ? ` · ${note}` : ''}` : note;
   return (
     <div style={{position: 'absolute', left: 104, top: 84, opacity: out}}>
       <div style={{display: 'flex', alignItems: 'center', gap: 20}}>
         {earth ? (
           <RingIcon p={line} />
         ) : (
-          <div style={{width: 60 * line, height: 2, background: `linear-gradient(90deg, ${C.goldDeep}, ${C.gold})`}} />
+          <div style={{width: 60 * line, height: 2, background: history ? `linear-gradient(90deg, ${C.inkSoft}, ${C.goldAntique})` : `linear-gradient(90deg, ${C.goldDeep}, ${C.gold})`}} />
         )}
         <div
           style={{
@@ -53,7 +54,7 @@ export const YearTag: React.FC<{year: string; note?: string; tone?: 'ink' | 'lig
             fontWeight: 600,
             fontSize: 42,
             letterSpacing: '0.06em',
-            color: earth ? C.inkSoft : light ? C.goldLight : C.goldDeep,
+            color: earth ? C.inkSoft : history ? C.goldAntique : light ? C.goldLight : C.goldDeep,
             clipPath: `inset(0 ${(1 - txt) * 100}% 0 0)`,
             textShadow: light ? '0 0 14px rgba(20,24,36,0.5)' : '0 0 12px rgba(251,246,236,0.9)',
             whiteSpace: 'nowrap',

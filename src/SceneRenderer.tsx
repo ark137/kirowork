@@ -8,6 +8,11 @@ import {Placeholder} from './scenes/Placeholder';
 import {Prologue} from './scenes/Prologue';
 import {S2Lignin} from './scenes/S2Lignin';
 import {S3Forest} from './scenes/S3Forest';
+import {H1Fire} from './scenes/H1Fire';
+import {H2Canoe} from './scenes/H2Canoe';
+import {H3Mortise} from './scenes/H3Mortise';
+import {H4Palace} from './scenes/H4Palace';
+import {H5Home} from './scenes/H5Home';
 import {S4Wenzhou} from './scenes/S4Wenzhou';
 import {S5Blueprint} from './scenes/S5Blueprint';
 import {S5bInspector} from './scenes/S5bInspector';
@@ -40,6 +45,11 @@ export const SCENE_COMPONENTS: Record<string, React.FC> = {
   prologue: Prologue,
   s2: S2Lignin,
   s3: S3Forest,
+  fire: H1Fire,
+  canoe: H2Canoe,
+  mortise: H3Mortise,
+  palace: H4Palace,
+  home: H5Home,
   s4: S4Wenzhou,
   s5: S5Blueprint,
   s5b: S5bInspector,
@@ -99,7 +109,7 @@ export const SceneRenderer: React.FC<{scene: Scene}> = ({scene}) => {
           <Sequence key={shot.id} from={start} durationInFrames={shot.dur * FPS} layout="none">
             {shot.year ? (
               <Sequence durationInFrames={shot.dur * FPS} layout="none">
-                <YearTag year={shot.year} note={shot.yearNote} tone={shot.subTone} variant={shot.line === 'A' ? 'earth' : undefined} />
+                <YearTag year={shot.year} note={shot.yearNote} tone={shot.subTone} variant={shot.line === 'A' ? 'earth' : shot.line === 'H' ? 'history' : undefined} />
               </Sequence>
             ) : null}
             {subWindows(shot).map((w, i) => (
