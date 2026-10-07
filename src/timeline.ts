@@ -76,11 +76,11 @@ export const SHOTS: Shot[] = [
       {zh: '他学船舶设计。造船要懂水，更要懂木头。', en: 'He studied naval architecture. To build ships, you must know water — and wood.'},
       {zh: '一颗种子，就这样埋下了。', en: 'A seed was planted.'},
     ]},
-  {id: 5.5, label: '5+', dur: 9, act: '第二幕 · 人的起点', line: 'B', scene: 's5b',
+  {id: 5.5, label: '5+', dur: 10.5, act: '第二幕 · 人的起点', line: 'B', scene: 's5b',
     // 年份标签由场景自己绘制：1988 → 1994 随证书滚动
     brief: '验船师：温州渔港，木质渔船；他沿船舷敲击船板验船 → 检验证书一年年盖章叠起（1988→1994）→ 放下检验锤、摘下工作帽 → 手抚船板，船板化作一片木地板',
     subs: [
-      {zh: '1988 年毕业后，他考进温州市渔业船舶检验局，成了一名验船师。', en: 'In 1988, after graduating, he passed the exam to become a ship inspector in Wenzhou.'},
+      {zh: '1988 年毕业后，他分配进中华人民共和国船舶检验局温州渔船检验处，成了一名验船师。', en: 'In 1988, after graduating, he was assigned to the PRC Ship Inspection Bureau\'s Wenzhou Fishing Vessel Inspection Office as a ship inspector.'},
       {zh: '六年里，他验过一条又一条木船，摸透了船板里的木头。', en: 'For six years, he inspected boat after boat, coming to know the wood in every plank.'},
       {zh: '1994 年，他辞去公务员的“铁饭碗”，选择了心里更热爱的木头。', en: 'In 1994, he left his secure government post to follow the wood he truly loved.'},
     ]},

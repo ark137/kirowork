@@ -1,6 +1,6 @@
 # 《一棵树的信》— Remotion + SVG
 
-1920×1080 · 30fps · 240s（含 mill 镜与“人与木”五镜）· 音效轨（无音乐）
+1920×1080 · 30fps · 241.5s（含 mill 镜与“人与木”五镜）· 音效轨（无音乐）
 
 ```bash
 npm i
@@ -9,6 +9,7 @@ npm run studio     # 预览
 npm run render     # 全片 → out/film.mp4
 npx remotion render src/index.ts Scene-prologue out/prologue.mp4   # 单场景
 python3 scripts/make-soundtrack.py --clip mill   # 单镜音效 → out/mill-sfx.wav（响度与已出成片一致）
+python3 scripts/make-soundtrack.py --rework s5b   # 第 5.5 镜改版（9→10.5 秒）的替换音频
 python3 scripts/make-soundtrack.py --range fire home   # 连续多镜音效（含两端 14 帧交叉淡化）
 npx remotion render src/index.ts Film out/x.mp4 --frames=780-1663 --muted   # 对应的画面区间
 ```

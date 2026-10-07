@@ -10,7 +10,7 @@ import os, subprocess, sys, time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CRF = sys.argv[1] if len(sys.argv) > 1 else '21'
 MAX_NEW = int(sys.argv[2]) if len(sys.argv) > 2 else 10 ** 6
-TOTAL = 7200
+TOTAL = 7245
 STEP = 260
 CH = os.path.join(ROOT, 'out/full-chunks')
 LOG = os.path.join(ROOT, 'out/render.log')

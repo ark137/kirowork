@@ -9,7 +9,10 @@ import {YearTag} from '../components/YearTag';
 import {ridgePath, wobblyCircle} from '../lib/geom';
 
 /**
- * 第 5.5 镜（9 秒 / 270 帧）：1988–1994，温州市渔业船舶检验局，验船师
+ * 第 5.5 镜（10.5 秒 / 315 帧）：1988–1994，中华人民共和国船舶检验局温州渔船检验处，验船师
+ * 动画按“内部帧”（原 9 秒 / 270 帧的编排）书写，再经 warp 拉伸到 315 帧：
+ *   新增的 45 帧放在 A 段（+32）和 B 段（+14），给加长的第一句字幕留出阅读时间；C、D 段节奏不变，
+ *   因此 D 段结尾（内部第 270 帧，实际第 315 帧）与原版完全一致，可无缝接第 6 镜。
  * A   0–80  清晨渔港，木质渔船靠岸；他沿船舷敲击船板，每一下漾开一圈金色“年轮”
  * B  72–160 检验证书一年一张盖章叠起，年份 1988 → 1994；渔船进出、日影移动
  * C 156–204 最后一次验船：检验锤与记录夹放在系缆桩上，摘下工作帽，转身望向岸上
@@ -29,8 +32,13 @@ const CERT_START = 82;
 const CERT_GAP = 12;
 const CERTS = 7; // 1988 … 1994
 
+/** 实际帧 → 内部帧（分段线性）。实际 315 帧 = 内部 270 帧；超出后按 1:1 延伸 */
+const WARP_ACTUAL = [0, 112, 206, 250, 315];
+const WARP_INTERNAL = [0, 80, 160, 204, 270];
+export const warpFrame = (f: number) => interpolate(f, WARP_ACTUAL, WARP_INTERNAL, {extrapolateLeft: 'clamp', extrapolateRight: 'extend'});
+
 export const S5bInspector: React.FC = () => {
-  const f = useCurrentFrame();
+  const f = warpFrame(useCurrentFrame());
   const io = Easing.inOut(Easing.cubic);
 
   // ── 年份：随证书滚动 ──
@@ -438,7 +446,7 @@ const Certificate: React.FC<{year: number; no: number; stamp: number}> = ({year,
       渔船检验证书
     </text>
     <text x={0} y={-90} textAnchor="middle" fontFamily={sans} fontSize={20} fill={C.inkSoft} letterSpacing={4}>
-      温州市渔业船舶检验局
+      中华人民共和国船舶检验局温州渔船检验处
     </text>
     {[
       ['船名', `浙瓯渔 ${3101 + no * 7}`],

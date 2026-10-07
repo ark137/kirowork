@@ -14,6 +14,8 @@
   python3 scripts/make-soundtrack.py                 全片音效轨
   python3 scripts/make-soundtrack.py --clip mill     只导出某一镜的音效 → out/<scene>-sfx.wav
       （响度增益取自“不含该镜”的全片混音，即与已出成片的音量一致；可单独剪进原片）
+  python3 scripts/make-soundtrack.py --rework s5b
+      第 5.5 镜改版（9 → 10.5 秒）的替换音频 → out/s5b-rework-sfx.wav（其余声音与原片逐样本一致）
   python3 scripts/make-soundtrack.py --range fire home
       导出连续多镜（含两端与原片的 14 帧交叉淡化）→ out/fire-home-sfx.wav
 """
@@ -29,6 +31,9 @@ SRC = os.path.join(ROOT, '.sfx-src')
 rng = np.random.default_rng(7)
 
 # ───────────────────────── 时间轴 ─────────────────────────
+DUR_OVERRIDE = {}  # 场景 → 秒：重现“改动前”的时间轴时用（如 {'s5b': 9.0}）
+
+
 def scene_starts(exclude=()):
     txt = open(os.path.join(ROOT, 'src/timeline.ts'), encoding='utf-8').read()
     body = txt[txt.index('export const SHOTS'):txt.index('export type Scene')]
@@ -37,7 +42,7 @@ def scene_starts(exclude=()):
     for dur, sc in shots:
         if sc in exclude:
             continue
-        fr = int(round(float(dur) * FPS))
+        fr = int(round(float(DUR_OVERRIDE.get(sc, dur)) * FPS))
         if not order or order[-1][0] != sc:
             order.append([sc, cur, 0])
             starts[sc] = cur
@@ -452,19 +457,12 @@ def build():
     place(s_shimmer(1.8, 18, seed=5), at('s5', 132), -27)
 
     # 第 5.5 镜：验船师
-    bed('s5b', lambda d: s_water(d, 0.4) * 0.8 + 0.2 * s_wind(d, 300, 1200), -21)
-    place(s_horn(2.2, 87), at('s5b', 4), -30, pan=0.6)
-    for fr, pan in [(26, -0.4), (46, -0.1), (66, 0.2)]:
-        kenney('impactWood_medium_00%d' % (fr % 5), at('s5b', fr), -12, pan=pan, wet=0.25)
-        place(s_bell(523.3, 1.5, ((1, 1), (2.0, 0.3))), at('s5b', fr + 1), -32, pan=pan)
-    for k in range(7):
-        kenney('impactSoft_medium_00%d' % (k % 5), at('s5b', 82 + k * 12 + 6), -20, rate=1.1)
-        kenney('bookPlace%d' % (k % 3 + 1), at('s5b', 82 + k * 12 + 1), -30, rate=1.2)
-    kenney('metalClick', at('s5b', 168), -20, pan=0.2)
-    kenney('bookPlace2', at('s5b', 176), -22, pan=0.2)
-    kenney('cloth2', at('s5b', 186), -24)
-    place(s_rustle(1.6), at('s5b', 204), -28)
-    place(s_shimmer(1.8, 20, seed=6), at('s5b', 236), -23)
+    if SKIP.get('s5b'):  # 跳过时照常执行一遍（保持随机数序列不变），但不留下任何声音
+        saved = mix.copy()
+        s5b_cues()
+        mix[:] = saved
+    else:
+        s5b_cues()
 
     # 第 6 镜：第一家门店
     bed('s6', lambda d: s_room(d, 400) * 0.6 + 0.4 * s_forest(d, birds=0.3, insects=0, seed=6)[: int(d * SR)], -26)
@@ -730,6 +728,23 @@ def s_rain(sec):
     return fade(x / (np.abs(x).max() + 1e-9), 0.4, 0.4)
 
 
+def s5b_cues(tf=lambda fr: fr):
+    """第 5.5 镜：验船师。fr 为场景“内部帧”（原版 9 秒编排），tf 把它映射到实际帧（原版为恒等）"""
+    bed('s5b', lambda d: s_water(d, 0.4) * 0.8 + 0.2 * s_wind(d, 300, 1200), -21)
+    place(s_horn(2.2, 87), at('s5b', 4), -30, pan=0.6)  # 开头的远处汽笛不随拉伸移动，便于与原片衔接
+    for fr, pan in [(26, -0.4), (46, -0.1), (66, 0.2)]:
+        kenney('impactWood_medium_00%d' % (fr % 5), at('s5b', tf(fr)), -12, pan=pan, wet=0.25)
+        place(s_bell(523.3, 1.5, ((1, 1), (2.0, 0.3))), at('s5b', tf(fr + 1)), -32, pan=pan)
+    for k in range(7):
+        kenney('impactSoft_medium_00%d' % (k % 5), at('s5b', tf(82 + k * 12 + 6)), -20, rate=1.1)
+        kenney('bookPlace%d' % (k % 3 + 1), at('s5b', tf(82 + k * 12 + 1)), -30, rate=1.2)
+    kenney('metalClick', at('s5b', tf(168)), -20, pan=0.2)
+    kenney('bookPlace2', at('s5b', tf(176)), -22, pan=0.2)
+    kenney('cloth2', at('s5b', tf(186)), -24)
+    place(s_rustle(1.6), at('s5b', tf(204)), -28)
+    place(s_shimmer(1.8, 20, seed=6), at('s5b', tf(236)), -23)
+
+
 def human_cues():
     """人与木：fire / canoe / mortise / palace / home（场景内帧号与各组件动画节点对应）"""
     # H1 火
@@ -899,6 +914,74 @@ def master():
     mix = mix[:end]
 
 
+ADDED_SCENES = ('fire', 'canoe', 'mortise', 'palace', 'home', 'mill')  # 原 203 秒成片之后新增的场景
+
+
+def s5b_tf(fr):
+    """内部帧 → 实际帧（与 S5bInspector.tsx 的 warpFrame 互为反函数）"""
+    if fr >= 270:
+        return 315 + (fr - 270)
+    return float(np.interp(fr, [0, 80, 160, 204, 270], [0, 112, 206, 250, 315]))
+
+
+def export_rework_s5b(tail=14):
+    """第 5.5 镜（验船师）改版：时长 9 秒 → 10.5 秒。
+    输出 [本镜起点, 下一镜起点 + tail 帧) 的音频，替换原片中对应的 [起点, 起点 + 270 + tail 帧)。
+    做法：原片里除本镜外的声音逐样本保留；在下一镜的环境声进场之前插入 1.5 秒空隙，放入新版本镜声音。"""
+    global mix
+    old_dur, new_dur = 9.0, 10.5
+    ext = int(round((new_dur - old_dur) * SR))
+    # 1) 增益：与原片一致（不含后来新增的场景，本镜按原时长）
+    DUR_OVERRIDE['s5b'] = old_dur
+    setup(exclude=ADDED_SCENES)
+    build()
+    gain = master_gain()
+    # 2) 原片环境：保留随机数序列，但去掉本镜自己的声音
+    setup(exclude=('mill',))
+    SKIP['human'] = True
+    SKIP['s5b'] = True
+    build()
+    base = mix.copy()
+    old_start = dict(STARTS)
+    SKIP['s5b'] = False
+    setup(exclude=('mill',))      # 同一时间轴，这次保留原本镜声音：用来在片段两端与原片做交叉
+    build()
+    old_s5b = mix - base
+    SKIP['human'] = False
+    del DUR_OVERRIDE['s5b']
+    # 3) 新版本镜声音：独立随机源
+    setup(exclude=('mill',))
+    isolated(lambda: s5b_cues(s5b_tf), 5500)
+    new = mix.copy()
+    a = int(STARTS['s5b'] / FPS * SR)
+    o6 = old_start['s6']
+    assert o6 - old_start['s5b'] == 270
+    p = int((o6 / FPS - 0.45) * SR)             # 下一镜环境声进场（o6 - 0.4 秒）之前
+    end_old = int((o6 + tail) / FPS * SR)
+    base_clip = np.concatenate([base[a:p], np.zeros((ext, 2)), base[p:end_old]])
+    new_clip = new[a:a + len(base_clip)]
+    # 两端各做一次等功率交叉：原片的本镜声音 → 新版本镜声音（开头 0.3 秒）、新版 → 原片（结尾 0.5 秒）。
+    # 这样片段首尾的声音就是原片自己的声音，剪接处没有跳变；结尾处新旧的闪光音处于同一相位（D 段节奏未变）。
+    n = len(base_clip)
+    k0, k1 = int(0.3 * SR), int(0.5 * SR)
+    env_new = np.ones(n)
+    env_old = np.zeros(n)
+    t0 = np.linspace(0, np.pi / 2, k0)
+    t1 = np.linspace(0, np.pi / 2, k1)
+    env_new[:k0], env_old[:k0] = np.sin(t0), np.cos(t0)
+    env_new[-k1:], env_old[-k1:] = np.cos(t1), np.sin(t1)
+    old_clip = np.zeros_like(base_clip)
+    old_clip[:k0] = old_s5b[a:a + k0]
+    old_clip[-k1:] = old_s5b[end_old - k1:end_old]
+    x = base_clip + new_clip * env_new[:, None] + old_clip * env_old[:, None]
+    for ch in range(2):
+        x[:, ch] = hp(x[:, ch], 25)
+    x = limiter(x * gain)
+    out = os.path.join(ROOT, 'out', 's5b-rework-sfx.wav')
+    wavfile.write(out, SR, (x * 32767).astype(np.int16))
+    print(json.dumps({'scene': 's5b', 'frames': round(len(x) / SR * FPS), 'seconds': len(x) / SR, 'gain_db': 20 * math.log10(gain), 'wav': out}))
+
+
 def export_range(first, last, tail=14):
     """连续多镜：[first 起点, last 之后一镜起点 + tail 帧)，与 Film 的交叉淡化对齐，首尾与原片逐帧衔接"""
     global mix
@@ -937,6 +1020,9 @@ def export_range(first, last, tail=14):
 if __name__ == '__main__':
     import sys
     ensure_packs()
+    if '--rework' in sys.argv:
+        {'s5b': export_rework_s5b}[sys.argv[sys.argv.index('--rework') + 1]]()
+        sys.exit(0)
     if '--range' in sys.argv:
         i = sys.argv.index('--range')
         export_range(sys.argv[i + 1], sys.argv[i + 2])
