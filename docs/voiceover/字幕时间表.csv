@@ -1,0 +1,54 @@
+﻿序号,镜头号,幕,开始(秒),开始(时间码),开始(帧),字幕消失(秒),字幕消失(时间码),建议说完(秒),可用时长(秒),朗读字数,语速(字/秒),提示,中文,English
+1,0,序章,0.27,00:00:00.267,8,4.80,00:00:04.800,4.47,4.20,8,1.9,,一棵树，要长多少年？,How many years does it take to grow a tree?
+2,1,序章,5.27,00:00:05.267,158,8.80,00:00:08.800,8.47,3.20,8,2.5,,一个人，又要走多远？,And how far must a man walk?
+3,2,第一幕 · 木的诞生,13.27,00:00:13.267,398,16.17,00:00:16.167,15.83,2.57,10,3.9,,四亿年前，陆地一片荒芜。,"Four hundred million years ago, the land lay barren."
+4,2,第一幕 · 木的诞生,16.17,00:00:16.167,485,19.80,00:00:19.800,19.47,3.30,13,3.9,,植物学会了造“骨头”，它叫木质素。,"Plants learned to build ""bones"" — a substance called lignin."
+5,3,第一幕 · 木的诞生,20.27,00:00:20.267,608,25.80,00:00:25.800,25.47,5.20,11,2.1,,于是，地球有了第一片森林。,"And so, the Earth grew its first forest."
+6,3.1,第一幕 · 人与木,26.27,00:00:26.267,788,30.80,00:00:30.800,30.47,4.20,13,3.1,,人类最早的温暖，来自一根木头。,Humanity's first warmth came from a piece of wood.
+7,3.2,第一幕 · 人与木,31.27,00:00:31.267,938,35.80,00:00:35.800,35.47,4.20,20,4.8,,八千年前，浙江的先民把一根原木，凿成了一条船。,"Eight thousand years ago, people in Zhejiang carved a single log into a boat."
+8,3.3,第一幕 · 人与木,36.27,00:00:36.267,1088,39.53,00:00:39.533,39.20,2.93,13,4.4,,七千年前，河姆渡人发明了榫卯。,"Seven thousand years ago, the people of Hemudu invented the mortise and tenon."
+9,3.3,第一幕 · 人与木,39.53,00:00:39.533,1186,42.80,00:00:42.800,42.47,2.93,13,4.4,,不靠钉子，木头与木头彼此咬合。,No nails — just wood holding wood.
+10,3.4,第一幕 · 人与木,43.27,00:00:43.267,1298,47.20,00:00:47.200,46.87,3.60,22,6.1,偏紧，建议说快一点或缩短,六百多年前，紫禁城用一层层斗拱，托起了宫殿的屋檐。,"Over six centuries ago, the Forbidden City raised its eaves on layer upon layer of wooden brackets."
+11,3.4,第一幕 · 人与木,47.20,00:00:47.200,1416,49.80,00:00:49.800,49.47,2.27,11,4.9,略紧,木头柔韧、温暖，也让人安心。,"Wood bends without breaking — warm, and reassuring."
+12,3.5,第一幕 · 人与木,50.27,00:00:50.267,1508,54.80,00:00:54.800,54.47,4.20,17,4.0,,一代又一代人，住在木头里，被木头温暖着。,"Generation after generation, people lived within wood, warmed by it."
+13,4,第二幕 · 人的起点,55.27,00:00:55.267,1658,59.80,00:00:59.800,59.47,4.20,19,4.5,,1966 年，卢伟光出生在温州一个经商世家。,"In 1966, Carl Lu was born into a merchant family in Wenzhou."
+14,5,第二幕 · 人的起点,60.27,00:01:00.267,1808,63.43,00:01:03.433,63.10,2.83,16,5.6,偏紧，建议说快一点或缩短,他学船舶设计。造船要懂水，更要懂木头。,"He studied naval architecture. To build ships, you must know water — and wood."
+15,5,第二幕 · 人的起点,63.43,00:01:03.433,1903,65.80,00:01:05.800,65.47,2.03,10,4.9,略紧,一颗种子，就这样埋下了。,A seed was planted.
+16,5.5,第二幕 · 人的起点,66.27,00:01:06.267,1988,70.33,00:01:10.333,70.00,3.73,38,10.2,偏紧，建议说快一点或缩短,1988 年毕业后，他分配进中华人民共和国船舶检验局温州渔船检验处，成了一名验船师。,"In 1988, after graduating, he was assigned to the PRC Ship Inspection Bureau's Wenzhou Fishing Vessel Inspection Office as a ship inspector."
+17,5.5,第二幕 · 人的起点,70.33,00:01:10.333,2110,73.03,00:01:13.033,72.70,2.37,22,9.3,偏紧，建议说快一点或缩短,六年里，他验过一条又一条木船，摸透了船板里的木头。,"For six years, he inspected boat after boat, coming to know the wood in every plank."
+18,5.5,第二幕 · 人的起点,73.03,00:01:13.033,2191,76.30,00:01:16.300,75.97,2.93,26,8.9,偏紧，建议说快一点或缩短,1994 年，他辞去公务员的“铁饭碗”，选择了心里更热爱的木头。,"In 1994, he left his secure government post to follow the wood he truly loved."
+19,6,第二幕 · 人的起点,76.77,00:01:16.767,2303,83.30,00:01:23.300,82.97,6.20,26,4.2,,1994 年 4 月 8 日，28 平方米的地板店，在温州街头开张了。,"On April 8, 1994, a 28-square-meter flooring shop opened on a Wenzhou street."
+20,7,第二幕 · 人的起点,83.77,00:01:23.767,2513,87.60,00:01:27.600,87.27,3.50,17,4.9,略紧,他亲手设计了“安信”商标：地板堆成的大树。,He designed the Anxin mark himself: a tree built from floorboards.
+21,7,第二幕 · 人的起点,87.60,00:01:27.600,2628,91.30,00:01:31.300,90.97,3.37,17,5.0,略紧,地板来自树木；信赖，要像树一样慢慢长成。,"Floors come from trees. And trust, like a tree, takes time to grow."
+22,10,第三幕 · 断粮,91.77,00:01:31.767,2753,95.13,00:01:35.133,94.80,3.03,19,6.3,偏紧，建议说快一点或缩短,1998 年，一纸公文，国家禁止砍伐森林资源。,"In 1998, a national decree banned the logging of forests."
+23,10,第三幕 · 断粮,95.13,00:01:35.133,2854,97.30,00:01:37.300,96.97,1.83,10,5.5,略紧,原料的来路，被一刀斩断。,His supply of timber was cut off overnight.
+24,11,第三幕 · 断粮,97.77,00:01:37.767,2933,103.30,00:01:43.300,102.97,5.20,23,4.4,,他想去巴西进口木材，可海外的货源，都攥在中间商手里。,"He wanted to import from Brazil, but middlemen held every overseas source."
+25,12,第三幕 · 断粮,103.77,00:01:43.767,3113,109.30,00:01:49.300,108.97,5.20,21,4.0,,他混在搬运工中间，一箱一箱地看包装，找一个线索。,"Among the dockworkers, he searched crate after crate for a single clue."
+26,13,第四幕 · 一纸传真,109.77,00:01:49.767,3293,115.30,00:01:55.300,114.97,5.20,29,5.6,偏紧，建议说快一点或缩短,1998 年 7 月，他在一卷封箱胶带上，找到了一个巴西供应商的电话。,"In July 1998, on a roll of packing tape, he found a Brazilian supplier's number."
+27,14,第四幕 · 一纸传真,115.77,00:01:55.767,3473,118.83,00:01:58.833,118.50,2.73,13,4.8,,他不懂葡萄牙语，对方不懂中文。,He spoke no Portuguese; they spoke no Chinese.
+28,14,第四幕 · 一纸传真,118.83,00:01:58.833,3565,122.30,00:02:02.300,121.97,3.13,14,4.5,,隔着 11 个小时的时差，他一直拨。,"Across an 11-hour time difference, he kept dialing."
+29,15,第四幕 · 一纸传真,122.77,00:02:02.767,3683,125.27,00:02:05.267,124.93,2.17,10,4.6,,一个多月后，传真机响了。,"More than a month later, the fax machine rang."
+30,15,第四幕 · 一纸传真,125.27,00:02:05.267,3758,128.30,00:02:08.300,127.97,2.70,14,5.2,略紧,巴西供应商路易斯，寄来了报价单。,"Luis, a Brazilian supplier, had sent a quote."
+31,8,第五幕 · 雨林里的树,128.77,00:02:08.767,3863,130.87,00:02:10.867,130.53,1.77,11,6.2,偏紧，建议说快一点或缩短,报价单来自的地方，是南美。,The quote came from South America.
+32,8,第五幕 · 雨林里的树,130.87,00:02:10.867,3926,135.30,00:02:15.300,134.97,4.10,31,7.6,偏紧，建议说快一点或缩短,在那里，数千万年的雨水、阳光和河流，养出了地球上最大的热带雨林：亚马逊。,"There, tens of millions of years of rain, sun and rivers had raised the largest rainforest on Earth: the Amazon."
+33,9,第五幕 · 雨林里的树,135.77,00:02:15.767,4073,141.30,00:02:21.300,140.97,5.20,17,3.3,,为了抢到一缕阳光，树长成了各自的样子。,"Reaching for a ray of light, each tree grew into its own shape."
+34,16,第六幕 · 相遇,141.77,00:02:21.767,4253,149.30,00:02:29.300,148.97,7.20,16,2.2,,四亿年长出的树，等来了一个找它的人。,A tree four hundred million years in the making met the man who came looking for it.
+35,17,第六幕 · 相遇,149.77,00:02:29.767,4493,154.30,00:02:34.300,153.97,4.20,14,3.3,,他在雨林里，找到了最适合的木头。,"In the rainforest, he found the perfect wood."
+36,17.5,第六幕 · 相遇,154.77,00:02:34.767,4643,158.90,00:02:38.900,158.57,3.80,24,6.3,偏紧，建议说快一点或缩短,他和巴西供应商路易斯一起，在雨林边建起了原材料工厂。,"Together with Luis, his Brazilian supplier, he built a raw-material mill at the edge of the rainforest."
+37,17.5,第六幕 · 相遇,158.90,00:02:38.900,4767,162.30,00:02:42.300,161.97,3.07,17,5.5,偏紧，建议说快一点或缩短,先规划，后采伐；只取森林给得起的那一份。,"Plan first, harvest second — take only what the forest can give."
+38,18,第六幕 · 相遇,162.77,00:02:42.767,4883,167.83,00:02:47.833,167.50,4.73,22,4.6,,卫星遥感把林区分成 25 块，每年只采一块，采完就种。,"Satellites divide the forest into 25 plots. One is harvested each year, then replanted."
+39,18,第六幕 · 相遇,167.83,00:02:47.833,5035,171.30,00:02:51.300,170.97,3.13,13,4.1,,25 年一个轮回，森林生生不息。,A 25-year cycle — and the forest lives on.
+40,19,第七幕 · 走出去,171.77,00:02:51.767,5153,176.30,00:02:56.300,175.97,4.20,25,6.0,偏紧，建议说快一点或缩短,1999 年，木头有了着落，他在上海青浦建起了自己的工厂。,"In 1999, with timber secured, he built his own factory in Qingpu, Shanghai."
+41,20,第七幕 · 走出去,176.77,00:02:56.767,5303,180.53,00:03:00.533,180.20,3.43,10,2.9,,从温州到美洲，再到非洲。,"From Wenzhou to the Americas, and on to Africa,"
+42,20,第七幕 · 走出去,180.53,00:03:00.533,5416,184.30,00:03:04.300,183.97,3.43,11,3.2,,安信把根扎向更远的地方。,Anxin sent its roots ever farther.
+43,21,第七幕 · 走出去,184.77,00:03:04.767,5543,188.87,00:03:08.867,188.53,3.77,14,3.7,,奥运场馆、上海世博中心、整木定制。,"Olympic venues, the Shanghai Expo Center, bespoke whole-wood interiors —"
+44,21,第七幕 · 走出去,188.87,00:03:08.867,5666,192.30,00:03:12.300,191.97,3.10,12,3.9,,它成了很多重要地方的脚下。,it became the ground beneath many landmark places.
+45,22,第八幕 · 传承,192.77,00:03:12.767,5783,199.30,00:03:19.300,198.97,6.20,26,4.2,,卢伟光的大儿子卢奕开，留学美国十年，2017 年回到了公司。,"After ten years of study in the U.S., his elder son Ben Lu joined the company in 2017."
+46,23,第八幕 · 传承,199.77,00:03:19.767,5993,202.53,00:03:22.533,202.20,2.43,15,6.2,偏紧，建议说快一点或缩短,父子俩在会议上常常争得面红耳赤。,Father and son often argued heatedly in meetings.
+47,23,第八幕 · 传承,202.53,00:03:22.533,6076,207.30,00:03:27.300,206.97,4.43,28,6.3,偏紧，建议说快一点或缩短,父亲说：只要儿子说得对，就该有心胸接受，否则，企业成不了百年企业。,"""If my son is right, I must have the heart to accept it — or we will never last a hundred years."""
+48,24,第八幕 · 传承,207.77,00:03:27.767,6233,211.87,00:03:31.867,211.53,3.77,12,3.2,,2022 年，卢奕开出任总裁。,"In 2022, Ben Lu became president."
+49,24,第八幕 · 传承,211.87,00:03:31.867,6356,216.30,00:03:36.300,215.97,4.10,14,3.4,,从冲突到理解，互相依靠，互为铠甲。,"From conflict to understanding — each other's support, each other's armor."
+50,25,尾声,216.77,00:03:36.767,6503,223.30,00:03:43.300,222.97,6.20,8,1.3,,信任，超越任何语言。,Trust transcends every language.
+51,26,尾声,223.77,00:03:43.767,6713,233.30,00:03:53.300,232.97,9.20,20,2.2,,让每个人都拥有一个更温暖、更健康的生活空间。,"A warmer, healthier living space — for everyone."
+52,27,尾声,233.77,00:03:53.767,7013,236.17,00:03:56.167,235.83,2.07,4,1.9,,安信地板。,Anxin Flooring.
+53,27,尾声,236.17,00:03:56.167,7085,241.30,00:04:01.300,240.97,4.80,16,3.3,,树的秘密，是时间；人的秘密，是一个信字。,The secret of a tree is time. The secret of a man is a single word: trust.
